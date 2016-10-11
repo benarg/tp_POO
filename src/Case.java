@@ -32,4 +32,14 @@ public class Case {
     	return this.nature;
     }
 
+
+    /**
+      * Construit une case de coordonnes (line, column) de nature de terrain natureT
+      */
+    public Case(int line, int column, NatureTerrain natureT) {
+    	this.ligne = line;
+    	this.colonne = column;
+    	this.nature = natureT;
+    }
+
 }
