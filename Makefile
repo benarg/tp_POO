@@ -30,7 +30,7 @@ testLecture:
 	javac -d bin -sourcepath src src/TestLecteurDonnees.java
 
 outilsBases:
-	javac -d bin -sourcepath src src/Case.java src/NatureTerrain.java
+	javac -d bin -sourcepath src src/Case.java src/NatureTerrain.java src/Direction.java
 
 # Execution:
 # on peut taper directement la ligne de commande :
