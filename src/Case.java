@@ -34,12 +34,24 @@ public class Case {
 
 
     /**
-      * Construit une case de coordonnes (line, column) de nature de terrain natureT
+      * Construit une case de coordonnes (line, column) 
+      * de nature de terrain natureT
       */
     public Case(int line, int column, NatureTerrain natureT) {
     	this.ligne = line;
     	this.colonne = column;
     	this.nature = natureT;
+    }
+
+
+    /** 
+      * Donne une representation en String de la case
+      */
+    @Override
+    public String toString() {
+    	return this.nature 
+    			+ " aux coordonnes (" + this.getLigne() 
+    			+ "," + this.getColonne() + ")";
     }
 
 }
