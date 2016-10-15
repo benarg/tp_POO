@@ -1,124 +1,188 @@
-class Robot {
+/**
+  * Robot : 
+  * contient la carte et la case sur laquelle il est positionne, le volume et le temps pour remplir et vider (extinction) son reservoir, sa vitesse en fonction du type de terrain et le volume d'eau qu'il contient.
+  * Cette classe fournit notamment des methodes pour acceder aux vitesses du robot en fonction du terrain, a sa position...
+  * ou pour effectuer une intervention (deverser une quantite d'eau, remplir son reservoir) ou se deplacer sur une case donnee.
+  * @author argensob
+  * 2016
+  */
+
+
+
+
+public abstract class Robot {
+	protected Carte carte;
 	protected Case position;
 	protected int reservoir;
+	protected double tempsRemplissage;
+
+	/** temps pour vider entierement son reservoir */
+	protected double extinction;
+
 	protected double vitesseForet;
 	protected double vitesseEau;
 	protected double vitesseRocher;
 	protected double vitesseLibre;
 	protected int quantiteEau;
-	protected int tempsRemplissage;
-	protected double extinction;
 	
+	/** 
+	  * Construit un objet de type Robot
+	  */
+	public Robot(Carte carte, Case position, int reservoir, int vitesseForet, int vitesseEau, int vitesseRocher, int vitesseLibre, double tempsRemplissage, int quantiteEau, double extinction) {
+		this.carte = carte;
+		this.position = position;
+		this.reservoir = reservoir;
+		this.vitesseForet = vitesseForet;
+		this.vitesseEau = vitesseEau;
+		this.vitesseRocher = vitesseRocher;
+		this.vitesseLibre = vitesseLibre;
+		this.tempsRemplissage = tempsRemplissage;
+		this.quantiteEau = quantiteEau;
+		this.extinction = extinction;
+	}
 
-	public Robot(Case position,int reservoir,int vitesseForet,int vitesseEau,int vitesseRocher, int vitesseLibre, int tempsRemplissage, int 	quantiteEau, double extinction)
-		{this.position=position;
-		this.reservoir=reservoir;
-		this.vitesseForet=vitesseForet;
-		this.vitesseEau=vitesseEau;
-		this.vitesseRocher=vitesseRocher;
-		this.vitesseLibre=vitesseLibre;
-		this.tempsRemplissage=tempsRemplissage;
-		this.quantiteEau=quantiteEau;
-		this.extinction=extinction;
-		}
-
-
-	public Case getPosition()
-		{ return this.position;
-		}
+	/**
+          * Accesseur (get)
+          * @return la position du robot
+          */
+	public Case getPosition() {
+		return this.position;
+	}
 	
-	public int getReservoir()
-		{ return this.reservoir;
-		}
+	/**
+          * Accesseur (get)
+          * @return le volume du reservoir du robot
+          */
+	public int getReservoir() {
+		return this.reservoir;
+	}
 
-	public int getQuantiteEau()
-		{ return this.quantiteEau;
-		}
+	/**
+          * Accesseur (get)
+          * @return le volume d'eau du robot
+          */
+	public int getQuantiteEau() {
+		return this.quantiteEau;
+	}
 	
-	public int getTempsRemplissage()
-		{ return this.tempsRemplissage;
-		}
+	/**
+          * Accesseur (get)
+          * @return le temmps que met le robot pour remplir son reservoir
+          */
+	public double getTempsRemplissage() {
+		return this.tempsRemplissage;
+	}
 
-	public double getExtinction()
-		{ return this.extinction;
-		}
+	/**
+          * Accesseur (get)
+          * @return le temps que met le robot pour vider la totalite de son reservoir
+          */
+	public double getExtinction() {
+		return this.extinction;
+	}
 	
+	/** 
+	  * Retourne la vitesse de deplacement du robot en fonction de la nature du terrain
+	  * Si le robot ne peut se deplacer sur un type de terrain sa vitesse est nulle
+	  * @return la vitesse du robot sur un terrain de nature 'terrain'
+	  */
+	public double getVitesse(NatureTerrain terrain) {
+		switch (terrain) {
+			case EAU :
+				return this.vitesseEau;
+			case FORET :
+				return this.vitesseForet;
+			case ROCHE :
+				return this.vitesseRocher;
+			case TERRAIN_LIBRE :
+				return this.vitesseLibre;
+			case HABITAT :
+				return this.vitesseLibre; //vitesseLibre = vitesseHabitat pour tous les robots
+			default :
+				throw new IllegalArgumentException("la direction n'est pas connue");
+			}
+	}
 
-	public double getVitesse(NatureTerrain terrain)
-		{if (terrain==NatureTerrain.EAU)
-			{ return this.vitesseEau;
-			}
-		if (terrain==NatureTerrain.FORET)
-			{return this.vitesseForet;
-			}
-		if (terrain==NatureTerrain.ROCHE)
-			{return this.vitesseRocher;
-			}
-		if (terrain==TERRAIN_LIBRE || terrain==NatureTerrain.HABITAT)
-			{ return this.vitesseLibre;
-			}
-		}
+	/**
+          * Mutateur (set)
+          * Modifie la Case position du robot
+	  * La Case 'pos' devient la nouvelle position du robot 
+          */
+	public void setPosition(Case pos) {
+		this.position = pos;
+	}
 
-	public void setPosition(Case pos)
-		// à voir si utilise une exception pour vérifier si la case existe...
-		{ this.position=pos;
-		}
-
-	public void setQuantiteEau(int volume)
-		{if(volume>this.reservoir)
-			{System.out.println("Le volume dépasse la taille du reservoir !");
-			}
+	/**
+          * Mutateur (set)
+          * Modifie le volume d'eau que contient le robot
+	  * Releve une exception si le volume entree est incompatible avec le reservoir du robot
+	  * Sinon l'attribut 'QuantiteEau' prend pour valeur 'volume' 
+          */
+	public void setQuantiteEau(int volume) {
+		if (volume > this.reservoir)
+			throw new IllegalArgumentException("Le volume d'eau depasse la taille du reservoir !");
+		if (volume < 0)
+			throw new IllegalArgumentException("Le volume entree est incorrecte !");
 		else
-			{this.quantiteEau=volume;
-			}
-		}
-
-	public void deverserEau(int volume)
-		{if (volume>this.quantiteEau)
-			{ System.out.println("Vous n'avez pas assez d'eau !");
-			}
+			this.quantiteEau = volume;
+	}
+	
+	/**
+	  * Methode qui permet au robot de deverser une certaine quantite d'eau sur la case ou il se trouve
+	  * Releve une excetion si le volume entree est incompatible avec le volume d'eau que contient le robot
+	  * Sinon l'attribut 'quantiteEau' est mis a jour en fonction du volume deverse
+	  */
+	public void deverserEau(int volume) {
+		if (volume > this.quantiteEau)
+			throw new IllegalArgumentException("Vous n'avez pas assez d'eau !");
+		if (volume < 0)
+			throw new IllegalArgumentException("Le volume entree est incorrecte !");
 		else
-			{ this.quantiteEau-=volume;
-			}
+			this.quantiteEau -= volume;
 		}
 
-	public void remplirReservoir()
-		{ if (this.position.getNature() != NatureTerrain.EAU)
-			{ System.out.println("Remplissage impossible !");
+	/**
+	 * Methode qui permet au robot de remplir completement son rerservoir d'eau, si de sa 'position' il a une case voisine de type eau.
+	 * L'attribut 'quantiteEau' est alors égal au volume du reservoir;
+	 */
+	public void remplirReservoir() {
+		Case voisin;
+		NatureTerrain nature;
+		boolean eau = false;
+		if (this.quantiteEau == this.reservoir)
+			System.out.println("Reservoir d'eau déja rempli !");
+		else {
+			for (Direction dir : Direction.values()) {
+				voisin = carte.getVoisin(this.position, dir);
+				nature = voisin.getNature();
+				if (nature == NatureTerrain.EAU) {
+					this.quantiteEau = this.reservoir;
+					eau = true;
+			 	}
 			}
-		else
-			{ this.quantiteEau=this.reservoir;
-			}
-		}
-
-	public void deplacer(Case dest)
-		{ int xRob,yRob, xDest, yDest;
-		NatureTerrain nature=dest.getNature();
-		xDest=dest.getLigne();
-		yDest=dest.getColonne();
-		xRob=this.position.getLigne();
-		yRob=this.position.getColonne();
-		double vitesse=this.getVitesse(nature);
-		if ( ((xDest+1==xRob) && (yDest==yRob)) || ((xDest-1==xRob) && (yDest==yRob)) || ((xDest==xRob) && (yDest+1==yRob)) || 			((xDest==xRob) && (yDest-1==yRob)))
-			{ if(vitesse!=0)
-				{this.position=dest;
-				}
+			if (eau == true)
+				System.out.println("Remplissage en cours...");
 			else
-				{System.out.println("Terrain non accessible !");
-				}
-			}
-		else
-			{System.out.println("Case non accessible !");
-			}
+				System.out.println("Remplissage impossible !");
 		}
+	}
+				
+	/**
+	 * Methode qui permet au robot de se deplacer dans une direction 'dir' donnee, en verifiant que cette case est bien accessible.
+	 * Une exception est levee si la case ne possede pas de voisine dans la direction 'dir' ou si la nature de la case n'est pas compatible.
+	 * Le cas echeant, l'attribut 'position' du robot est mis a jour.
+	 */
+	public void deplacer(Direction dir) {
+		Case dest = this.carte.getVoisin(this.position, dir);
+		NatureTerrain nature = dest.getNature();
+		double vitesse = this.getVitesse(nature);
+		if (vitesse != 0)
+			this.position = dest;
+		else {
+			throw new IllegalArgumentException("Terrain non accessible !");
+		}
+	}
+}
 		
-}		
-		
 
 
-
-
-	
-
-	
-		
