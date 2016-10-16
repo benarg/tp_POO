@@ -32,6 +32,14 @@ public class Case {
     	return this.nature;
     }
 
+    /**
+      * Mutateur (set)
+      * Impose la nature du terrain de la case
+      */
+    public void setNature(NatureTerrain nat) {
+    	this.nature = nat;
+    }
+
 
     /**
       * Construit une case de coordonnes (line, column) 
