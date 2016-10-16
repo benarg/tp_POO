@@ -38,5 +38,13 @@ public class TestRobotAChenilles {
 		RAC.deplacer(Direction.SUD);
 		System.out.println("Apres deplacement vers le SUD , la position du robot est: " + RAC.getPosition());
 
+		System.out.println("La vitesse du robot sur TERRAIN_LIBRE ou HABITAT est par defaut de: " + RAC.getVitesse(NatureTerrain.HABITAT) + "km/h");
+		System.out.println("La vitesse du robot sur FORET est par defaut de: " + RAC.getVitesse(NatureTerrain.FORET) + "km/h");
+		RAC.setVitesse(100);
+		System.out.println("Apres RAC.setVitesse(100),");
+		System.out.println("La vitesse du robot sur TERRAIN_LIBRE ou HABITAT est : " + RAC.getVitesse(NatureTerrain.HABITAT) + "km/h");
+		System.out.println("et la vitesse du robot sur FORET est de: " + RAC.getVitesse(NatureTerrain.FORET) + "km/h");
+
+
 	}
 }
