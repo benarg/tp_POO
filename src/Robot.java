@@ -28,7 +28,7 @@ public abstract class Robot {
 	/** 
 	  * Construit un objet de type Robot
 	  */
-	public Robot(Carte carte, Case position, int reservoir, int vitesseForet, int vitesseEau, int vitesseRocher, int vitesseLibre, double tempsRemplissage, int quantiteEau, double extinction) {
+	public Robot(Carte carte, Case position, int reservoir, double vitesseForet, double vitesseEau, double vitesseRocher, double vitesseLibre, double tempsRemplissage, int quantiteEau, double extinction) {
 		this.carte = carte;
 		this.position = position;
 		this.reservoir = reservoir;
@@ -153,12 +153,14 @@ public abstract class Robot {
 			System.out.println("Reservoir d'eau déja rempli !");
 		else {
 			for (Direction dir : Direction.values()) {
-				voisin = carte.getVoisin(this.position, dir);
-				nature = voisin.getNature();
-				if (nature == NatureTerrain.EAU) {
-					this.quantiteEau = this.reservoir;
-					eau = true;
-			 	}
+				if (carte.voisinExiste(this.position, dir)) {
+					voisin = carte.getVoisin(this.position, dir);
+					nature = voisin.getNature();
+					if (nature == NatureTerrain.EAU) {
+						this.quantiteEau = this.reservoir;
+						eau = true;
+			 		}
+				}
 			}
 			if (eau == true)
 				System.out.println("Remplissage en cours...");
@@ -182,6 +184,19 @@ public abstract class Robot {
 			throw new IllegalArgumentException("Terrain non accessible !");
 		}
 	}
+
+	/**
+	  * Donne une representation de la matrice des cartes avec comme valeur
+	  * le type de terrain
+	  */
+	@Override
+	public String toString() {
+		String rob; 
+		rob = "Le robot est positionné sur la case " + this.position + " de la carte. Il possede "  + this.quantiteEau + " litres d'eau dans son reservoir de " + this.reservoir + " litres.";
+		return rob;
+		
+	}
+
 }
 		
 
