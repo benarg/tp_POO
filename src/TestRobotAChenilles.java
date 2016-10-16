@@ -40,10 +40,10 @@ public class TestRobotAChenilles {
 
 		System.out.println("La vitesse du robot sur TERRAIN_LIBRE ou HABITAT est par defaut de: " + RAC.getVitesse(NatureTerrain.HABITAT) + "km/h");
 		System.out.println("La vitesse du robot sur FORET est par defaut de: " + RAC.getVitesse(NatureTerrain.FORET) + "km/h");
-		RAC.setVitesse(100);
-		System.out.println("Apres RAC.setVitesse(100),");
-		System.out.println("La vitesse du robot sur TERRAIN_LIBRE ou HABITAT est : " + RAC.getVitesse(NatureTerrain.HABITAT) + "km/h");
-		System.out.println("et la vitesse du robot sur FORET est de: " + RAC.getVitesse(NatureTerrain.FORET) + "km/h");
+		RobotAChenilles RAC1 = new RobotAChenilles(map, C0, 100);
+		System.out.println("Soit un robot construit avec une vitesse imposee a 100km/h");
+		System.out.println("La vitesse du robot sur TERRAIN_LIBRE ou HABITAT est : " + RAC1.getVitesse(NatureTerrain.HABITAT) + "km/h");
+		System.out.println("et la vitesse du robot sur FORET est de: " + RAC1.getVitesse(NatureTerrain.FORET) + "km/h");
 
 
 	}
