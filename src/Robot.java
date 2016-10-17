@@ -186,8 +186,7 @@ public abstract class Robot {
 	}
 
 	/**
-	  * Donne une representation de la matrice des cartes avec comme valeur
-	  * le type de terrain
+	  * Donne une representation en Sring du robot
 	  */
 	@Override
 	public String toString() {
