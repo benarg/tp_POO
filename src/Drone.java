@@ -7,7 +7,7 @@
 public class Drone extends Robot {
 
 	/** 
-         * Construit un RobotAPattes avec les valeurs par defauts 
+         * Construit un Drone avec les valeurs par defauts 
          * sur la Case position de la Carte carte
          */
 	public Drone(Carte carte, Case position) {
