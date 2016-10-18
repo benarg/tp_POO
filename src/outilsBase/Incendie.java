@@ -12,9 +12,21 @@ public class Incendie {
     Case position;
     int quantiteEau;
     
-    public Incendie(Case positon, int quantiteEau) {
-	this.position = position;
-	this.quantiteEau = quantiteEau;
+    /**
+      * Construit un Incendie sur la case position 
+      * d'intensite quantiteEau
+      */
+    public Incendie(Case pos, int intensite) {
+		this.position = pos;
+		this.quantiteEau = intensite;
+    }
+
+    @Override
+    public String toString() {
+    	return "Incendie: \t"
+    	+ "position = (" + this.position.getLigne() 
+    	+ "," + this.position.getColonne() + ");\t"
+    	+ "intensite = " + this.quantiteEau;
     }
 
 }

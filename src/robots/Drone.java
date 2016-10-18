@@ -36,5 +36,10 @@ public class Drone extends Robot {
 		else
 			System.out.println("Remplissage impossible !");
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "Drone";
+	}
 }
 

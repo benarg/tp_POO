@@ -59,9 +59,8 @@ public class Case {
       */
     @Override
     public String toString() {
-    	return this.nature 
-    			+ " aux coordonnes (" + this.getLigne() 
-    			+ "," + this.getColonne() + ")";
+    	return "Case (" + this.getLigne() + "," + this.getColonne() + "):\t"
+          + "nature = " + this.nature;
     }
 
 }

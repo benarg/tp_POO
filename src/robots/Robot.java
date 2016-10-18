@@ -193,7 +193,11 @@ public abstract class Robot {
 	public String toString() {
 		String rob; 
 		rob = "Le robot est positionné sur la case " + this.position + " de la carte. Il possede "  + this.quantiteEau + " litres d'eau dans son reservoir de " + this.reservoir + " litres.";
-		return rob;
+		return "Robot: \t"
+			+ "position = (" + this.position.getLigne() 
+    		+ "," + this.position.getColonne() + ");\t"
+    		+ "vitesse = " + this.getVitesse(NatureTerrain.TERRAIN_LIBRE)
+    		+ "\ttype = ";
 		
 	}
 

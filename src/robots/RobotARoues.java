@@ -15,7 +15,7 @@ public class RobotARoues extends Robot {
      * sur la Case position de la Carte carte
      */
     public RobotARoues(Carte carte, Case position) {
-	super(carte, position, 5000, 0, 0, 0, 80, 10., 0, 100./5.);
+      super(carte, position, 5000, 0, 0, 0, 80, 10., 0, 100./5.);
     }
 
     /**
@@ -23,10 +23,16 @@ public class RobotARoues extends Robot {
      * sur la Case position de la Carte carte
      */
     public RobotARoues(Carte carte, Case position, int vitesse) {
-	super(carte, position, 5000, 0, 0, 0, 80, 10., 0, 100./5.);
-	if (vitesse > 80) {
-	    vitesse = 80;
-	    this.vitesseLibre = vitesse;
-	}
+      super(carte, position, 5000, 0, 0, 0, 80, 10., 0, 100./5.);
+      if (vitesse > 80) {
+        vitesse = 80;
+        this.vitesseLibre = vitesse;
+      }
     }
+
+  @Override
+  public String toString() {
+    return super.toString() + "Roues";
+  }
+
 }

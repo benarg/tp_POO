@@ -40,5 +40,9 @@ public class RobotAChenilles extends Robot {
 			super.setPosition(pos);
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + "Chenilles";
+	}
 
 }

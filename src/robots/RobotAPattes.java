@@ -36,5 +36,9 @@ public class RobotAPattes extends Robot {
 	    super.setPosition(pos);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "Pattes";
+    }
 
 }
