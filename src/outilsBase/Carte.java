@@ -8,6 +8,8 @@
   * 2016
   */
 
+package outilsBase;
+
 public class Carte {
 
 	/** Taille des Cases*/

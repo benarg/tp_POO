@@ -4,6 +4,9 @@
   * 2016
   */
 
+package robots;
+
+import outilsBase.*;
 
 public class RobotAChenilles extends Robot {
 
@@ -23,7 +26,7 @@ public class RobotAChenilles extends Robot {
 		super(carte, position, 2000, 60/2, 0, 0, 60, 10., 0, 100./8.);
 		if (vitesse > 80)
 			vitesse = 80;
-		this.vitesseForet = vitesse/2;
+		this.vitesseForet = vitesse/2.;
 		this.vitesseLibre = vitesse;
 	}
 

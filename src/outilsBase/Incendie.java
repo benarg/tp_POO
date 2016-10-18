@@ -5,6 +5,7 @@
  * @author pougetat
  */
 
+package outilsBase;
 
 public class Incendie {
     

@@ -4,6 +4,8 @@
   * 2016
   */
 
+package outilsBase;
+
 public class Case {
     int ligne, colonne;
     NatureTerrain nature;

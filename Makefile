@@ -29,8 +29,11 @@ testInvader:
 testLecture:
 	javac -d bin -sourcepath src src/TestLecteurDonnees.java
 
-outilsBases:
-	javac -d bin -sourcepath src src/Case.java src/NatureTerrain.java src/Direction.java
+robots:
+	javac -d bin -sourcepath src src/robots/Robot.java src/robots/RobotAChenilles.java src/robots/RobotAPattes.java src/robots/RobotARoues.java
+
+outilsBase:
+	javac -d bin -sourcepath src src/outilsBase/Case.java src/outilsBase/NatureTerrain.java src/outilsBase/Direction.java src/outilsBase/Carte.java src/outilsBase/Incendie.java
 
 # Execution:
 # on peut taper directement la ligne de commande :
@@ -44,4 +47,4 @@ exeLecture:
 	java -classpath bin TestLecteurDonnees cartes/carteSujet.map
 
 clean:
-	rm -rf bin/*.class
+	rm -rf bin/*.class bin/outilsBase/*.class bin/robots/*.class

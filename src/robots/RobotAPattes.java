@@ -4,6 +4,9 @@
  * 2016
  */
 
+package robots;
+
+import outilsBase.*;
 
 public class RobotAPattes extends Robot {
 

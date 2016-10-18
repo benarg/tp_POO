@@ -1,3 +1,6 @@
+import robots.*;
+import outilsBase.*;
+
 public class TestRobot {
 	public static void main(String[] args) {
 		Carte map = new Carte(3, 4, 5);
@@ -21,18 +24,18 @@ public class TestRobot {
 		System.out.print(rob.getQuantiteEau() + "\n");
 		rob.remplirReservoir();
 		Case voisin = map.getCase(0,1);
-		voisin.nature = NatureTerrain.EAU;
+		voisin.setNature(NatureTerrain.EAU);
 		rob.remplirReservoir();
 		System.out.print(rob.getQuantiteEau() + "\n");
 		rob.remplirReservoir();
 
 		System.out.println("");
 		rob.deplacer(Direction.SUD);
-		System.out.println(rob.position);
+		System.out.println(rob.getPosition());
 		rob.deplacer(Direction.SUD);
-		System.out.println(rob.position);
+		System.out.println(rob.getPosition());
 		rob.deplacer(Direction.EST);
-		System.out.println(rob.position);
+		System.out.println(rob.getPosition());
 	
 		System.out.println("");
 		System.out.println(rob);

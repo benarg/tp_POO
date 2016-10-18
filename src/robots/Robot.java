@@ -7,8 +7,9 @@
   * 2016
   */
 
+package robots;
 
-
+import outilsBase.*;
 
 public abstract class Robot {
 	protected Carte carte;
@@ -143,14 +144,14 @@ public abstract class Robot {
 
 	/**
 	 * Methode qui permet au robot de remplir completement son rerservoir d'eau, si de sa 'position' il a une case voisine de type eau.
-	 * L'attribut 'quantiteEau' est alors Ã©gal au volume du reservoir;
+	 * L'attribut 'quantiteEau' est alors égal au volume du reservoir;
 	 */
 	public void remplirReservoir() {
 		Case voisin;
 		NatureTerrain nature;
 		boolean eau = false;
 		if (this.quantiteEau == this.reservoir)
-			System.out.println("Reservoir d'eau dÃ©ja rempli !");
+			System.out.println("Reservoir d'eau déja rempli !");
 		else {
 			for (Direction dir : Direction.values()) {
 				if (carte.voisinExiste(this.position, dir)) {
@@ -191,7 +192,7 @@ public abstract class Robot {
 	@Override
 	public String toString() {
 		String rob; 
-		rob = "Le robot est positionnÃ© sur la case " + this.position + " de la carte. Il possede "  + this.quantiteEau + " litres d'eau dans son reservoir de " + this.reservoir + " litres.";
+		rob = "Le robot est positionné sur la case " + this.position + " de la carte. Il possede "  + this.quantiteEau + " litres d'eau dans son reservoir de " + this.reservoir + " litres.";
 		return rob;
 		
 	}

@@ -1,3 +1,6 @@
+import robots.*;
+import outilsBase.*;
+
 public class TestRobotAChenilles {
 	public static void main(String[] args) {
 		Carte map = new Carte(3, 4, 5);
