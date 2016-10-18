@@ -31,9 +31,13 @@ public class DonneesSimulation {
       */
 	public Incendie getIncendie(int i) {
 		if (i >= 0 && i < this.incendies.length)
-			throw new IllegalArgumentException(
+			return this.incendies[i];
+		throw new IllegalArgumentException(
 				"l'indice entre est incorrect");
-		return this.incendies[i];
+	}
+
+	public int getNbIncendies() {
+		return this.incendies.length;
 	}
 
 	private Robot[] robots;
@@ -45,9 +49,13 @@ public class DonneesSimulation {
       */
 	public Robot getRobot(int i) {
 		if (i >= 0 && i < this.robots.length)
-			throw new IllegalArgumentException(
+			return this.robots[i];
+		throw new IllegalArgumentException(
 				"l'indice entre est incorrect");
-		return this.robots[i];
+	}
+
+	public int getNbRobots() {
+		return this.robots.length;
 	}
 
 
