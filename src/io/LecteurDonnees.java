@@ -382,7 +382,7 @@ public class LecteurDonnees {
                         int vitesse = Integer.parseInt(s);
                         return new RobotAPattes(map, map.getCase(lig,col), vitesse);
                     }
-                case "CHENNILLES":
+                case "CHENILLES":
                     if (s == null) {
                         return new RobotAChenilles(map, map.getCase(lig,col));
                     } else {
