@@ -7,9 +7,8 @@ import java.util.zip.DataFormatException;
 import io.*;
 import outilsBase.*;
 import robots.*;
-import simu.*;
 
-public class TestSimulation {
+public class TestSimulateur {
 
     public static void main(String[] args) {
         if (args.length < 1) {
