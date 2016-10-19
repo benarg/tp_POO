@@ -21,13 +21,16 @@
 #   -classpath : repertoire dans lequel sont cherches les .class deja compiles
 #   -sourcepath : repertoire dans lequel sont cherches les .java (dependances)
 
-all: testInvader testLecture outilsBases
+all: testInvader testLecture robots outilsBases
 
 testInvader:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestInvader.java
 
 testLecture:
 	javac -d bin -sourcepath src src/TestLecteurDonnees.java
+
+testSimulateur:
+	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestSimulateur.java
 
 robots:
 	javac -d bin -sourcepath src src/robots/Robot.java src/robots/RobotAChenilles.java src/robots/RobotAPattes.java src/robots/RobotARoues.java
@@ -45,6 +48,10 @@ exeInvader:
 
 exeLecture: 
 	java -classpath bin TestLecteurDonnees cartes/carteSujet.map
+ 
+exeSimulateur: testSimulateur
+	java -classpath bin:bin/gui.jar TestSimulateur cartes/carteSujet.map
+
 
 clean:
 	rm -rf bin/*.class bin/outilsBase/*.class bin/robots/*.class

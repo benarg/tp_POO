@@ -187,6 +187,11 @@ public abstract class Robot {
 	}
 
 	/**
+	  * Retourne le type de Robot
+	  */
+	public abstract String getType();
+
+	/**
 	  * Donne une representation en Sring du robot
 	  */
 	@Override

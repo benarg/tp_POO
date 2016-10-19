@@ -38,6 +38,11 @@ public class Drone extends Robot {
 	}
 
 	@Override
+	public String getType() {
+		return "DRONE";
+	}
+
+	@Override
 	public String toString() {
 		return super.toString() + "Drone";
 	}

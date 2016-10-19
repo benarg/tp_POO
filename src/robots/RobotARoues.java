@@ -30,6 +30,11 @@ public class RobotARoues extends Robot {
       }
     }
 
+    @Override
+  public String getType() {
+    return "ROUES";
+  }
+
   @Override
   public String toString() {
     return super.toString() + "Roues";

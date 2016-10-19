@@ -10,7 +10,24 @@ package outilsBase;
 public class Incendie {
     
     Case position;
+
+    /**
+      * Accesseur (get)
+      * @return la position de l'incendie
+      */
+    public Case getPosition() {
+        return this.position;
+    }
+
     int quantiteEau;
+
+    /**
+      * Accesseur (get)
+      * @return la quantite d'eau necessaire pour eteindre l'incendie
+      */
+    public int getIntensite() {
+        return this.quantiteEau;
+    }
     
     /**
       * Construit un Incendie sur la case position 

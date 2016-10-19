@@ -37,6 +37,11 @@ public class RobotAPattes extends Robot {
     }
 
     @Override
+    public String getType() {
+        return "PATTES";
+    }
+
+    @Override
     public String toString() {
         return super.toString() + "Pattes";
     }

@@ -41,6 +41,11 @@ public class RobotAChenilles extends Robot {
 	}
 
 	@Override
+	public String getType() {
+		return "CHENILLES";
+	}
+
+	@Override
 	public String toString() {
 		return super.toString() + "Chenilles";
 	}
