@@ -6,21 +6,29 @@
 package evenements;
 
 public class Date {
-	private Evenements evenements;
+	private Evenement evenements;
 	private int t;
+
 
 	/**
 	  * Construit une liste d'evenements associes a la date t
 	  */
-	public Date(int t, Evenements events) {
+	public Date(int t, Evenement event) {
 		this.t = t;
-		this.evenements = new Evenements(null, null);
-		while(events.getSuiv() != null) {             // acceseur getSuiv à definir dans Evenements.java ?
-			if(events.getDate() == t) 
-				this.evenements.addEvenement(events.cour);
-			events = events.getSuiv();
-		}			
+		if (event.getDate() == t)
+			this.evenements = new Evenements(event, null);
+		else
+			throw new IllegalArgumentException("Date non compatible !");
 	}
+	
+
+	public void addEvenement(Evenement event) {
+		if (event.getDate() == t)
+			this.evenements = event.addEvenement(event);
+		else
+			throw new IllegalArgumentException("Date non compatible !");
+	}
+
 
 
 	/**
