@@ -1,1 +1,5 @@
 bin/*.class
+bin/io
+bin/outilsBase
+bin/evenements
+bin/robots
