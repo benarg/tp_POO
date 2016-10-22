@@ -21,15 +21,22 @@ public class Date {
 			throw new IllegalArgumentException("Date non compatible !");
 	}
 	
-
+	/**
+	  * Ajoute un evenement a liste chainee des evenements associes a la date t
+	  */
 	public void addEvenement(Evenement event) {
 		if (event.getDate() == t)
 			this.evenements = event.addEvenement(event);
 		else
 			throw new IllegalArgumentException("Date non compatible !");
 	}
-
-
+	/**
+          * Accesseur (get)
+          * @return la date des evenements
+          */
+	public int getDate() {
+		return this.t;
+	}
 
 	/**
 	  * Execute tous les evenemets de la liste
