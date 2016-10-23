@@ -6,7 +6,7 @@
 package evenements;
 
 public class Date {
-	private Evenement evenements;
+	private Evenements evenements;
 	private int t;
 
 
@@ -26,7 +26,7 @@ public class Date {
 	  */
 	public void addEvenement(Evenement event) {
 		if (event.getDate() == t)
-			this.evenements = event.addEvenement(event);
+			this.evenements.addEvenement(event);
 		else
 			throw new IllegalArgumentException("Date non compatible !");
 	}
