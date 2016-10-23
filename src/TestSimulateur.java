@@ -21,7 +21,7 @@ public class TestSimulateur {
 
             Simulateur simul = new Simulateur(d);
 
-            for (int date=1; date<10; date++) {
+            for (int date=1; date<200; date++) {
                 for (int i = 0; i < 10; i++)
                     simul.ajouteEvenement(new EvenementMessage(date, " Date " + date + " " + i + "eme evenement insere\n"));
             }

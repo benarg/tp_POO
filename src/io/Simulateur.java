@@ -52,8 +52,10 @@ public class Simulateur implements Simulable {
 
     @Override
     public void next() {
-        if (this.simulationTerminee())
+        if (this.simulationTerminee()) {
+            System.out.println("La simulation est terminee");
             System.exit(0);
+        }
         this.incrementeDate();
         Date d = dates.getDate(this.dateCour);
         if (d != null)
