@@ -21,6 +21,16 @@ public class HashDates {
     }
 	
     }
+
+    public Date getDate(int d) {
+
+	if (this.getIndexDate(d) == null) {
+	    return null;
+	} else {
+	    return this.getIndexDate(d).getDate(d);
+	}
+	
+    }
     
     public Dates getIndexDate(int d) {
 	return this.hashDates[d % 100];
