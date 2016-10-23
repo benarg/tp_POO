@@ -3,7 +3,7 @@ package evenements;
 public class Dates {
 
     private Date cour;
-    private Date next;
+    private Dates next;
 
     public Dates() {
 	this.cour = null;
@@ -23,11 +23,11 @@ public class Dates {
      **/
     public Date getDate(int d) {
 
-	Date runner = this.cour;
+	Dates runner = this;
 	
 	while (runner != null) {
 	    if (runner.cour.getDate() == d) {
-		return runner;
+		return runner.cour;
 	    } else {
 		runner = runner.next;
 	    }
@@ -41,14 +41,18 @@ public class Dates {
      **/
     public void addEvenement(Evenement evt) {
 	
-	Date = getDate(evt.getDate());
+	Date d = getDate(evt.getDate());
 	
-	if (Date == null) {
-	    Dates toAdd = new Dates();
-	    toAdd.cour = new Date(evt.getDate(), evt);
-	    toAdd.next = this.cour;
+	if (d == null) {
+	    
+	    Dates tmp = this.next;
+	    this.next = new Dates(this.cour);
+	    this.next.cour = this.cour;
+	    this.next.next = tmp;
+	    this.cour = new Date(evt.getDate(), evt);
+	    
 	} else {
-	    Date.addEvenement(evt);
+	    d.addEvenement(evt);
 	}
     }
 }
