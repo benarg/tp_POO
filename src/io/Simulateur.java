@@ -13,6 +13,7 @@ import gui.Text;
 import io.*;
 import robots.*;
 import outilsBase.*;
+import evenements.*;
 
 /**
  * Affiche la simulation
@@ -21,10 +22,14 @@ public class Simulateur implements Simulable {
     /** L'interface graphique associée */
     private GUISimulator gui;
 
-
-
     private DonneesSimulation donneesSimu;
 
+    /** Date courante de la simulation*/
+    private int dateCour = 0;
+    /** Derniere date de la simulation*/
+    private int derniereDate = 0;
+
+    private HashDates dates = new HashDates();
 
     
 
@@ -47,12 +52,28 @@ public class Simulateur implements Simulable {
 
     @Override
     public void next() {
-        
+        this.incrementeDate();
+        Date d = dates.getDate(this.dateCour);
+        if (d != null)
+            d.execute();
+        this.draw();
     }
 
     @Override
     public void restart() {
         
+    }
+
+    public void ajouteEvenement(Evenement e) {
+        dates.addEvenement(e);
+    }
+
+    private void incrementeDate() {
+        this.dateCour++;
+    }
+
+    private boolean simulationTerminee() {
+        return this.dateCour == this.derniereDate;
     }
 
 
