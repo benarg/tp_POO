@@ -2,26 +2,27 @@ package evenements;
 
 public class HashDates {
 
-    private Dates[] hashDate;
+    private Dates[] hashDates;
     
     
     public HashDates() {
-	this.hasDates = new Dates[100];
+	this.hashDates = new Dates[100];
     }
     
     public void addEvenement(Evenement evt) {
 	
-	Date d = this.getDate(evt.getDate());
+	Dates d = this.getIndexDate(evt.getDate());
 	
 	if (d == null) {
-	    this.hashDates[evt.getDate() % 100].addEvenemt(evt);
-	} else {
-	    d.addEvenement(evt);
-	}
+	    this.hashDates[evt.getDate() % 100]
+		= new Dates(new Date(evt.getDate(), evt));			       		 	 
+    } else {
+	d.addEvenement(evt);
+    }
 	
     }
     
-    public Date getDate(int d) {
-	return this.hasDates[d % 100].getDate(d);
+    public Dates getIndexDate(int d) {
+	return this.hashDates[d % 100];
     }
 }
