@@ -16,9 +16,18 @@ public class EvtDeplacerRobot extends Evenement {
 		this.robot = rob;
 		this.direction = dir;
 		}
-
+	/**
+	  * Execute l'evenement
+	  * Arrete la simulation si une exception est rattrapee
+	  */
 	public void execute() {
-		this.robot.deplacer(this.direction);
+		try {
+			this.robot.deplacer(this.direction);
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("Erreur : deplacement impossible.");
+			System.exit(0);
+		}	
 	}
 }
 		
