@@ -52,6 +52,8 @@ public class Simulateur implements Simulable {
 
     @Override
     public void next() {
+        if (this.simulationTerminee())
+            System.exit(0);
         this.incrementeDate();
         Date d = dates.getDate(this.dateCour);
         if (d != null)
@@ -61,11 +63,12 @@ public class Simulateur implements Simulable {
 
     @Override
     public void restart() {
-        
+        this.dateCour = 0;
     }
 
     public void ajouteEvenement(Evenement e) {
         dates.addEvenement(e);
+        this.derniereDate = Math.max(this.derniereDate, e.getDate());
     }
 
     private void incrementeDate() {
