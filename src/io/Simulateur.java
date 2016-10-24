@@ -103,9 +103,11 @@ public class Simulateur implements Simulable {
         /* On parcours les incendies pour les afficher*/
         for (int i = 0 ; i < this.donneesSimu.getNbIncendies(); i++) {
             Incendie incendie = this.donneesSimu.getIncendie(i);
-            int x = incendie.getPosition().getColonne()*taille;
-            int y = incendie.getPosition().getLigne()*taille;
-            gui.addGraphicalElement(new ImageElement(x,y,"img/INCENDIE.png", taille, taille, this.gui));
+            if (incendie.getIntensite() == 0) {
+                int x = incendie.getPosition().getColonne()*taille;
+                int y = incendie.getPosition().getLigne()*taille;
+                gui.addGraphicalElement(new ImageElement(x,y,"img/INCENDIE.png", taille, taille, this.gui));
+            }
         }
 
         /* On parcours les robots pour les afficher*/
