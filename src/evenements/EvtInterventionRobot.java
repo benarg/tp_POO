@@ -26,8 +26,8 @@ public class EvtInterventionRobot extends Evenement {
 	public void execute() {
 		if (this.robot.getPosition() == this.incendie.getPosition()) {
 			if (incendie.getIntensite() > robot.getQuantiteEau()) {
-				robot.deverserEau(robot.getQuantiteEau());
 				incendie.setIntensite(incendie.getIntensite() - robot.getQuantiteEau());
+				robot.deverserEau(robot.getQuantiteEau());
 			}
 			else {
 				robot.deverserEau(incendie.getIntensite());

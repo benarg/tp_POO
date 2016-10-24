@@ -30,6 +30,14 @@ public class Incendie {
     }
     
     /**
+      * Mutateur (set)
+      * Impose l'intensite du feu a la valeur entree en parametre
+      */
+    public void setIntensite(int quantite) {
+          this.quantiteEau = quantite;
+    }
+
+    /**
       * Construit un Incendie sur la case position 
       * d'intensite quantiteEau
       */

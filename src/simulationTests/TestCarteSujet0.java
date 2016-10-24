@@ -27,6 +27,9 @@ public class TestCarteSujet0 {
             simul.ajouteEvenement(new EvtDeplacerRobot(4,drone, Direction.SUD));
             simul.ajouteEvenement(new EvtDeplacerRobot(5,drone, Direction.OUEST));
             simul.ajouteEvenement(new EvtDeplacerRobot(6,drone, Direction.OUEST));
+            simul.ajouteEvenement(new EvtDeplacerRobot(7,drone, Direction.OUEST));
+            simul.ajouteEvenement(new EvtInterventionRobot(8, drone, d.getIncendie(2)));
+
 
 
 
