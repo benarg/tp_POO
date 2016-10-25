@@ -23,7 +23,7 @@ public class RobotAChenilles extends Robot {
 	  * sur la Case position de la Carte carte
 	  */
 	public RobotAChenilles(Carte carte, Case position, int vitesse) {
-		super(carte, position, 2000, 60/2, 0, 0, 60, 10., 0, 100./8.);
+		this(carte, position);
 		if (vitesse > 80)
 			vitesse = 80;
 		this.vitesseForet = vitesse/2.;

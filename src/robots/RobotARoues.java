@@ -23,11 +23,10 @@ public class RobotARoues extends Robot {
      * sur la Case position de la Carte carte
      */
     public RobotARoues(Carte carte, Case position, int vitesse) {
-      super(carte, position, 5000, 0, 0, 0, 80, 10., 0, 100./5.);
-      if (vitesse > 80) {
+      this(carte, position);
+      if (vitesse > 80)
         vitesse = 80;
-        this.vitesseLibre = vitesse;
-      }
+      this.vitesseLibre = vitesse;
     }
 
     @Override

@@ -23,9 +23,13 @@ public class Drone extends Robot {
 	  * sur la Case position de la Carte carte
 	  */
 	public Drone(Carte carte, Case position, int vitesse) {
-		super(carte, position, 10000, 100., 100., 100., 100., 30*60, 0, 10000./30.);
+		this(carte, position);
 		if (vitesse > 150)
 			vitesse = 150;
+		this.vitesseForet = vitesse;
+		this.vitesseEau = vitesse;
+		this.vitesseRocher = vitesse;
+		this.vitesseLibre = vitesse;
 	}
 
 	@Override
