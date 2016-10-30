@@ -10,6 +10,7 @@
 package robots;
 
 import outilsBase.*;
+import calculPCC.*;
 
 public abstract class Robot {
 	protected Carte carte;
@@ -25,6 +26,7 @@ public abstract class Robot {
 	protected double vitesseRocher;
 	protected double vitesseLibre;
 	protected int quantiteEau;
+	protected int[][] matriceAdj;
 	
 	/** 
 	  * Construit un objet de type Robot
@@ -40,6 +42,8 @@ public abstract class Robot {
 		this.tempsRemplissage = tempsRemplissage;
 		this.quantiteEau = quantiteEau;
 		this.extinction = extinction;
+		MatriceAdj mat = new MatriceAdj(this, carte);
+		this.matriceAdj = mat.getMatriceAdj();
 	}
 
 	/**
@@ -80,6 +84,14 @@ public abstract class Robot {
           */
 	public double getExtinction() {
 		return this.extinction;
+	}
+
+	/**
+          * Accesseur (get)
+          * @return la matrice d'adjacence associee au robot
+          */
+	public int[][] getMatriceAdj() {
+		return this.matriceAdj;
 	}
 	
 	/** 
