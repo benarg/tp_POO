@@ -15,7 +15,7 @@ public class TestMatriceAdj {
 		for (int i = 0; i < mat.length; i++) {
 			System.out.println("");
 			for (int j = 0; j < mat[0].length; j++) {
-				System.out.println(mat[i][j]);
+				System.out.print(mat[i][j]+" ");
 			}
 		}
 	}		
@@ -32,7 +32,7 @@ public class TestMatriceAdj {
 		Robot r0 = d.getRobot(0);
 		Robot r1 = d.getRobot(1);
 		Robot r2 = d.getRobot(2);
-		afficher(r0.getMatriceAdj());
+		afficher(r2.getMatriceAdj());
 		} catch (FileNotFoundException e) {
            	 System.out.println("fichier " + args[0] + " inconnu ou illisible");
        		 } catch (DataFormatException e) {

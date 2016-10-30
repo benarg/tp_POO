@@ -15,8 +15,12 @@ public class MatriceAdj {
 	private Carte carte;
 
 	private int calcTemps(Case c0, Case c1, Robot r, int taille) {
-		double res = Math.ceil((2*taille*3600/1000)/(r.getVitesse(c0.getNature()) + r.getVitesse(c1.getNature())));
-		return (int) res;
+		if ((r.getVitesse(c0.getNature()) == 0) || (r.getVitesse(c1.getNature()) == 0))
+			return 0;
+		else {
+			double res = Math.ceil((2*taille*3600/1000)/(r.getVitesse(c0.getNature()) + r.getVitesse(c1.getNature())));
+			return (int) res;
+		}
 	}
 
 	private int numeroSommet(Case sommet, Carte c) {
