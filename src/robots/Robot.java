@@ -100,23 +100,8 @@ public abstract class Robot {
      */
     public Chemin getPCC(Case dest) {
 
-	int startNode = this.position.getLigne() * this.carte.getNbColonnes()
-	    + this.position.getColonne();
-	int destNode = dest.getLigne() * this.carte.getNbColonnes()
-	    + dest.getColonne();
-	
-	int[][] matriceAdj = this.getMatriceAdj();
-	Dijkstra dijkstra = new Dijkstra(matriceAdj, startNode, destNode);
-
-	int dureePCC = dijkstra.getDistDestNode();
-	ArrayList<Integer> path = dijkstra.getPathToDest();
-	Chemin chemin = new Chemin();
-
-	for (int i = 0; i < path.size(); i++) {
-	    chemin.addCase(this.carte.getCase(path.get(i)/this.carte.getNbLignes(),
-					      path.get(i) % (carte.getNbLignes()-1)));
-	}
-	chemin.duree = dureePCC;
+	Dijkstra dij = new Dijkstra(this.getMatriceAdj(), this.getPosition(), dest, this.carte);
+	return dij.getPCC();
 	
     }
 	

@@ -13,13 +13,24 @@ package calculPCC;
 
 import java.util.ArrayList;
 import java.lang.Math;
+import outilsBase.*;
 
 public class Dijkstra {
 
-    private int distDestNode;
-    private ArrayList<Integer> pathToDest;
+    private Chemin chemin;
 
-    public Dijkstra(int adj[][], int startNode, int destNode) {
+    private int numeroSommet(Case sommet, Carte c) {
+	return (sommet.getLigne()*c.getNbColonnes() + sommet.getColonne());
+    }
+    
+    private Case caseDuSommet(int sommet, Carte c) {
+	return c.getCase(sommet/c.getNbColonnes(), sommet%(c.getNbLignes()));
+    }
+
+    public Dijkstra(int adj[][], Case start, Case dest, Carte carte) {
+
+	int startNode = numeroSommet(start, carte);
+	int destNode = numeroSommet(dest, carte);
 	
 	int n = adj.length;
 	
@@ -58,10 +69,10 @@ public class Dijkstra {
 	while (count < n-1) {
 
 	    minDistance =  99999999;
-
+	    
 	    //nextnode gives the node at minimum distance
 	    for (int i = 0; i < n; i++) {
-
+		
 		if ((distance[i] < minDistance) && (visited[i] == 0)) {
 		    minDistance = distance[i];
 		    nextNode = i;
@@ -81,47 +92,30 @@ public class Dijkstra {
 	    count++;
 	}
 
-
-
-	//print the path and distance of each node
-	
 	/*
-	  for (int i = 0; i < n; i++) {
-	  if (i != startNode) {
-	  System.out.println("Distance of node "
-	  + i + " = " + distance[i]);
-	  System.out.print("Path" + " = " + i);
-
-	  int j = i;
-
-	  do {
-	  j = pred[j];
-	  System.out.print("<-" + j);
-	  } while (j != startNode);
-
-	  System.out.println("");
-	  }
-	  }
-	*/
-
+	  We now assign to distDestNode the distance between the source and 
+	  the destination
+	  We also assign to pathToDest an arrayList<Integer> of the shortest
+	  path.
+	  Keep in mind that we will have to translate this path into a 
+	  "Chemin"
+	 */
 	int distDestNode = distance[destNode];
 	ArrayList<Integer> pathToDest = new ArrayList<Integer>();
-
+	
 	int j = destNode;
-
+	
 	pathToDest.add(j);
-
+	
 	do {
 	    j = pred[j];
 	    pathToDest.add(j);
-	} while (j != startNode);
-	
+	} while (j != startNode);	
 
 	/* 
 	   We invert the arrayList containing the path to obtain
 	   a path from source => dest instead of dest => source
-	*/
-	
+	*/	
 	int middle = (int) Math.floor(pathToDest.size()/2);
 	int size = pathToDest.size();
 	
@@ -130,23 +124,38 @@ public class Dijkstra {
 	    pathToDest.set(i, pathToDest.get(size - i - 1));
 	    pathToDest.set(size - i - 1, tmp);
 	}
-	
-	this.pathToDest = pathToDest;
-	this.distDestNode = distDestNode;
 
+	/*
+	  FOR DEBUG PURPOSES
+
+	for (int i = 0; i < pathToDest.size(); i++) {
+	    System.out.print(pathToDest.get(i) + "->");
+	}
+	*/
+	
+	/*
+	  We now create a "Chemin" by translating a node 
+	  into a "Case" 
+	  We also assign to chemin.duree the distance from the source to
+	  the dest
+	*/
+	Chemin chemin = new Chemin();
+	chemin.duree = distDestNode;
+	
+	for (int i = 0; i < pathToDest.size(); i++) {
+	    Case sommet = caseDuSommet(pathToDest.get(i), carte);
+	    // DEBUG : System.out.println(sommet);
+	    chemin.addCase(sommet, 0);
+	}
+
+	this.chemin = chemin;
 	
     }
 
-    public ArrayList<Integer> getPathToDest() {
+    public Chemin getPCC() {
 
-	return this.pathToDest;
+	return this.chemin;
 
-    }
-
-    public int getDistDestNode() {
-
-	return this.distDestNode;
-	
     }
 
     
