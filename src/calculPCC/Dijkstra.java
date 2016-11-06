@@ -24,7 +24,7 @@ public class Dijkstra {
     }
     
     private Case caseDuSommet(int sommet, Carte c) {
-	return c.getCase(sommet/c.getNbColonnes(), sommet%(c.getNbLignes()));
+	return c.getCase(sommet/c.getNbColonnes(), sommet%(c.getNbColonnes()));
     }
 
     public Dijkstra(int adj[][], Case start, Case dest, Carte carte) {

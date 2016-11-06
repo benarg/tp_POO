@@ -4,6 +4,7 @@ import calculPCC.*;
 import robots.*;
 import outilsBase.*;
 import io.*;
+import java.util.*;
 
 import java.util.zip.DataFormatException;
 
@@ -11,7 +12,7 @@ import java.util.zip.DataFormatException;
 public class TestPCC {
 
     private static void afficher(int[][] mat) {
-	System.out.println("\n Affichage matrice....");
+	System.out.println("\n ********  Here IS THE ADJACENCY MATRIX ********\n");
 	for (int i = 0; i < mat.length; i++) {
 	    System.out.println("");
 	    for (int j = 0; j < mat[0].length; j++) {
@@ -25,21 +26,6 @@ public class TestPCC {
     
     public static void main(String[] args) {
 
-	// On commence par créer une carte
-	Carte map = new Carte(3, 2, 100);
-
-	// On ajoute deux robots drones à cette carte
-	Robot drone1 = new Drone(map, map.getCase(0, 0));
-	Robot drone2 = new Drone(map, map.getCase(0, 0), 150);
-
-	// On crée la matrice d'adjacence associée à cette carte
-	MatriceAdj adj = new MatriceAdj(drone2, map);
-	int[][] mat = adj.getMatriceAdj();
-
-	// On affiche la matrice d'adjacence
-	afficher(mat);
-
-	// Et maintenant pour un second test ...
 	try {
 
 	    // On récupère les données d'une carte fournie par le sujet
@@ -50,29 +36,35 @@ public class TestPCC {
 	    Robot r1 = d.getRobot(1);
 	    Robot r2 = d.getRobot(2);
 
-	    // On affiche la matrice d'adjacence de r2
-	    System.out.println("HERE IS SOME INFO ON ADJ MATRIX");
-
-	    System.out.println(r2.getMatriceAdj()[39][28]);    
-	    System.out.println(r2.getMatriceAdj()[28][25]);
-	    System.out.println(r2.getMatriceAdj()[25][20]);
-	    System.out.println(r2.getMatriceAdj()[20][14]);
-	    System.out.println(r2.getMatriceAdj()[14][0]);  
-
 	    
-	    System.out.println("HERE IS INFORMATION ON THE MAP");
+	    System.out.println("\n ******** HERE IS INFORMATION ON THE MAP ********");
 	    System.out.println(d.getCarte());
 	    System.out.println("");
 
-	    System.out.println("HERE IS INFORMATION ON THE ROBOT POSITION");
+	    System.out.println("\n ******** HERE IS INFORMATION ON THE ROBOT POSITION ********");
 	    System.out.println(r2.getPosition());
 	    System.out.println("");
 
-	    System.out.println("HERE IS INFORMATION ON THE DIJKSTRA OBJECT");
+	    System.out.println("\n ******** HERE IS THE SHORTEST PATH  TO : (0,0) ********");
 	    
 	    // On crée un objet dijsktra
 	    Dijkstra dij = new Dijkstra(r2.getMatriceAdj(), r2.getPosition(), d.getCarte().getCase(0,0), d.getCarte());
+
+	    Chemin chemin = dij.getPCC();
+	    Iterator<Case> ite = chemin.getIterator();
+	    Case currentCase;
 	    
+	    while (ite.hasNext()) {
+
+		currentCase = ite.next();
+		System.out.print("(" + currentCase.getLigne() + " , "
+				 + currentCase.getColonne() + ") -> ");
+
+	    }
+
+	    System.out.print("THE LENGTH OF THIS PATH IS : " + chemin.getDuree());
+	    System.out.println("");
+		    
 	    
 	} catch (FileNotFoundException e) {
 	    
