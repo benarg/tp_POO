@@ -28,7 +28,7 @@ public class MatriceAdj {
 	}
 
 	private Case caseDuSommet(int sommet, Carte c) {
-		return c.getCase(sommet/c.getNbColonnes(), sommet%(c.getNbLignes() - 1));
+		return c.getCase(sommet/c.getNbColonnes(), sommet%(c.getNbColonnes()));
 	}		
 
 	private LinkedList<Integer> voisins(int sommet, Carte c) {
