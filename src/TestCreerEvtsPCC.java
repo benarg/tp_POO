@@ -21,6 +21,10 @@ public class TestCreerEvtsPCC {
 			Carte c = d.getCarte();
 			Case dest = c.getCase(0,0);
 
+			System.out.println(drone.getDureePCC(dest) +"\n");
+			System.out.println(roues.getDureePCC(c.getCase(1,5)) +"\n");
+			System.out.println(pattes.getDureePCC(c.getCase(1,3)));
+
 			drone.creerEvtsPCC(simul, dest);
 			roues.creerEvtsPCC(simul, c.getCase(1,5));
 			pattes.creerEvtsPCC(simul, c.getCase(1,3));
