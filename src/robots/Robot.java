@@ -9,8 +9,12 @@
 
 package robots;
 
+import java.util.*;
+
 import outilsBase.*;
 import calculPCC.*;
+import evenements.*;
+import io.*;
 
 public abstract class Robot {
     protected Carte carte;
@@ -96,7 +100,7 @@ public abstract class Robot {
 
     /**
      * Accesseur (get) 
-     * @return le plus court chemi
+     * @return le plus court chemin
      */
     public Chemin getPCC(Case dest) {
 
@@ -104,6 +108,37 @@ public abstract class Robot {
 	return dij.getPCC();
 	
     }
+
+    /**
+     * Accesseur (get) 
+     * @return la duree du plus court chemin
+     */
+    public int getDureePCC(Case dest) {
+
+	Chemin pcc = this.getPCC(dest);
+	return pcc.getDuree();	
+    }
+
+    /**
+     * Creer une liste d'evenements traduisant le deplacement du robot jusqu'a la destination 'dest' indiquee sur le plus court chemin calculee
+     */
+    public void creerEvtsPCC(Simulateur simul, Case dest) {
+
+	int t, taille;
+	taille = this.carte.getTailleCases();
+	t = 0;
+	Chemin pcc = this.getPCC(dest);
+	Case src, destination;
+	Iterator<Case> it = pcc.getIterator();
+	src = this.getPosition();
+        while (it.hasNext()) {
+        	destination = it.next();
+            	t += Math.ceil((2*taille*3600/1000)/(this.getVitesse(src.getNature()) + this.getVitesse(destination.getNature())));
+            	simul.ajouteEvenement(new EvtRobotSetPos(t, this, destination));
+            	src = destination;
+        }
+    }
+
 	
     /** 
      * Retourne la vitesse de deplacement du robot en fonction de la nature du terrain
