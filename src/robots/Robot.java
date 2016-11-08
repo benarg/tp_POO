@@ -122,11 +122,11 @@ public abstract class Robot {
     /**
      * Creer une liste d'evenements traduisant le deplacement du robot jusqu'a la destination 'dest' indiquee sur le plus court chemin calculee
      */
-    public void creerEvtsPCC(Simulateur simul, Case dest) {
+    public void creerEvtsPCC(Simulateur simul, Case dest, int d) {
 
 	int t, taille;
 	taille = this.carte.getTailleCases();
-	t = 0;
+	t = d;
 	Chemin pcc = this.getPCC(dest);
 	Case src, destination;
 	Iterator<Case> it = pcc.getIterator();
