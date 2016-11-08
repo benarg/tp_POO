@@ -45,11 +45,8 @@ public abstract class Strategie {
 
 	public abstract void step();
 
-	public void robotFini(Robot r) {
-		for (int i=0; i<robots.length; i++) {
-			if (robots[i] == r)
-				etatsRobots[i] = false;
-		}
+	public void robotFini(int indiceRobot) {
+		etatsRobots[indiceRobot] = false;
 	}
 
 	public int robotPPIncendie(Incendie i) {
