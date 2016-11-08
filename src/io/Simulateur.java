@@ -14,6 +14,7 @@ import io.*;
 import robots.*;
 import outilsBase.*;
 import evenements.*;
+import strategies.*;
 
 /**
  * Affiche la simulation
@@ -31,6 +32,8 @@ public class Simulateur implements Simulable {
 
     private HashDates dates = new HashDates();
 
+    private Strategie strat;
+
     
 
     /**
@@ -46,12 +49,34 @@ public class Simulateur implements Simulable {
         this.gui = new GUISimulator(width, height, Color.BLACK);
         this.gui.setSimulable(this);				// association a la gui!
         this.donneesSimu = d;
+        this.strat = new StrategieNull(d, this);
+        draw();
+    }
 
+    public Simulateur(DonneesSimulation d, int numStrategie) {
+        this(d);
+        switch(numStrategie) {
+            case 0:
+                this.strat = new StrategieTest(d, this);
+                break;
+            case 1:
+                this.strat = new StrategieElem(d, this);
+                break;
+            case 2:
+                this.strat = new StrategieEvolue(d, this);
+                break;
+            default:
+                break;
+        }
+        this.strat.step();
         draw();
     }
 
     @Override
     public void next() {
+        System.out.println("DerniereDate: " + this.derniereDate);
+        System.out.println("DateCour: " + this.dateCour + "\n");
+
         if (this.simulationTerminee()) {
             System.out.println("La simulation est terminee");
             System.exit(0);
@@ -60,6 +85,9 @@ public class Simulateur implements Simulable {
         Date d = dates.getDate(this.dateCour);
         if (d != null)
             d.execute();
+
+        this.strat.step();
+
         this.draw();
     }
 
@@ -71,6 +99,10 @@ public class Simulateur implements Simulable {
     public void ajouteEvenement(Evenement e) {
         dates.addEvenement(e);
         this.derniereDate = Math.max(this.derniereDate, e.getDate());
+    }
+
+    public int getDateCour() {
+        return this.dateCour;
     }
 
     private void incrementeDate() {
