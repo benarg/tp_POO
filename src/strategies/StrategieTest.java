@@ -18,7 +18,7 @@ public class StrategieTest extends Strategie{
 				Incendie feu = incendies[i];
 				int iRobot = this.robotPPIncendie(feu);
 				if (iRobot > -1) {
-					robots[iRobot].creerEvtsPCC(this.simu, feu.getPosition(), this.simu.getDateCour());
+					robots[iRobot].creerEvtsPCCACote(this.simu, feu.getPosition(), this.simu.getDateCour());
 					this.etatsRobots[iRobot] = true;
 					this.etatsIncendies[i] = true;
 				}

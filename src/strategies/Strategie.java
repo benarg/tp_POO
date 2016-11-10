@@ -56,7 +56,7 @@ public abstract class Strategie {
 		for (int j=0; j<robots.length; j++) {
 			if(!etatsRobots[j]) {
 				Robot r = robots[j];
-				int duree = r.getDureePCC(dest);
+				int duree = r.getDureePCCACote(dest);
 				if(duree < dureeMin) {
 					bestRobot = j;
 					dureeMin = duree;
@@ -70,7 +70,7 @@ public abstract class Strategie {
 		Case bestCase = null;
 		int dureeMin = Integer.MAX_VALUE;
 		for (Case c:casesEau) {
-			int duree = r.getDureePCC(c);
+			int duree = r.getDureePCCACote(c);
 			if(duree < dureeMin) {
 				bestCase = c;
 				dureeMin = duree;

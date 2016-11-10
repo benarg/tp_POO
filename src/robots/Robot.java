@@ -110,33 +110,105 @@ public abstract class Robot {
     }
 
     /**
+      * Determine le plus court
+      * pour aller sur une case si c'est un drone ou a cote sinon
+      * @param r le Robot concerne
+      * @param c la Case concernee
+      * @return le PCC ou NULL si inaccessible
+      */
+    public Chemin getPCCACote(Case c) {
+        if (this.getVitesse(NatureTerrain.EAU) != 0)
+            return this.getPCC(c);
+        int dureeMin = Integer.MAX_VALUE;
+        Chemin pCC = new Chemin();
+        pCC.addCase(c, Integer.MAX_VALUE);
+        Chemin chem = pCC;
+        int duree = dureeMin;;
+        int lig = c.getLigne();
+        int col = c.getColonne();
+        if (lig != 0) {
+            chem = this.getPCC(this.carte.getCase(lig-1,col));
+            duree = chem.getDuree();
+            if (duree < dureeMin) {
+                dureeMin = duree;
+                pCC = chem;
+            }
+        }
+        if (lig != (this.carte.getNbLignes() - 1))
+            chem = this.getPCC(this.carte.getCase(lig+1,col));
+            duree = chem.getDuree();
+            if (duree < dureeMin) {
+                dureeMin = duree;
+                pCC = chem;
+            }
+        if (col != 0)
+            chem = this.getPCC(this.carte.getCase(lig,col-1));
+            duree = chem.getDuree();
+            if (duree < dureeMin) {
+                dureeMin = duree;
+                pCC = chem;
+            }
+        if (col != (this.carte.getNbColonnes() - 1))
+            chem = this.getPCC(this.carte.getCase(lig,col+1));
+            duree = chem.getDuree();
+            if (duree < dureeMin) {
+                dureeMin = duree;
+                pCC = chem;
+            }
+        return pCC;
+    }
+
+    /**
      * Accesseur (get) 
      * @return la duree du plus court chemin
      */
     public int getDureePCC(Case dest) {
 
-	Chemin pcc = this.getPCC(dest);
-	return pcc.getDuree();	
+    Chemin pcc = this.getPCC(dest);
+    return pcc.getDuree();  
+    }
+
+    /**
+     * Accesseur (get) 
+     * @return la duree du plus court chemin pour aller a une case adjacente
+     */
+    public int getDureePCCACote(Case c) {
+        Chemin chem = this.getPCCACote(c);
+        return chem.getDuree();
+    }
+
+    /**
+      * Creer une liste d'evenements traduisant le deplacement du robot sur le chemin 'chem' a partir de la date d
+      */
+    private void creerEvtsChemin(Simulateur simul, Chemin chem, int d) {
+        int t, taille;
+        taille = this.carte.getTailleCases();
+        t = d;
+        Case src, destination;
+        Iterator<Case> it = chem.getIterator();
+        src = this.getPosition();
+        while (it.hasNext()) {
+            destination = it.next();
+            t += Math.ceil((2*taille*3600/1000)/(this.getVitesse(src.getNature()) + this.getVitesse(destination.getNature())));
+            simul.ajouteEvenement(new EvtRobotSetPos(t, this, destination));
+            src = destination;
+        }
     }
 
     /**
      * Creer une liste d'evenements traduisant le deplacement du robot jusqu'a la destination 'dest' indiquee sur le plus court chemin calculee
      */
     public void creerEvtsPCC(Simulateur simul, Case dest, int d) {
+        Chemin pcc = this.getPCC(dest);
+        creerEvtsChemin(simul, pcc, d);
+    }
 
-	int t, taille;
-	taille = this.carte.getTailleCases();
-	t = d;
-	Chemin pcc = this.getPCC(dest);
-	Case src, destination;
-	Iterator<Case> it = pcc.getIterator();
-	src = this.getPosition();
-        while (it.hasNext()) {
-        	destination = it.next();
-            	t += Math.ceil((2*taille*3600/1000)/(this.getVitesse(src.getNature()) + this.getVitesse(destination.getNature())));
-            	simul.ajouteEvenement(new EvtRobotSetPos(t, this, destination));
-            	src = destination;
-        }
+    /**
+     * Creer une liste d'evenements traduisant le deplacement du robot jusqu'a une case adjacente a 'c' indiquee sur le plus court chemin calculee
+     */
+    public void creerEvtsPCCACote(Simulateur simul, Case c, int d) {
+        Chemin pcc = this.getPCCACote(c);
+        creerEvtsChemin(simul, pcc, d);
     }
 
 	
