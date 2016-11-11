@@ -15,7 +15,7 @@ public class Drone extends Robot {
          * sur la Case position de la Carte carte
          */
 	public Drone(Carte carte, Case position) {
-		super(carte, position, 10000, 100., 100., 100., 100., 30*60, 0, 10000./30.);
+		super(carte, position, 10000, 100., 100., 100., 100., 30*60, 10000, 10000./30.);
     }
 
 	/**

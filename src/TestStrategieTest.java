@@ -11,9 +11,9 @@ public class TestStrategieTest {
 	public static void main(String[] args) {
 
 		try {
-       		DonneesSimulation d = LecteurDonnees.creeDonnees("cartes/carteSujet.map");
+       		DonneesSimulation d = LecteurDonnees.creeDonnees("cartes/desertOfDeath-20x20.map");
 
-           	Simulateur simul = new Simulateur(d, 0);
+           	Simulateur simul = new Simulateur(d, 2);
 
        		} catch (FileNotFoundException e) {
             		System.out.println("fichier " + args[0] + " inconnu ou illisible");

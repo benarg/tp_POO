@@ -31,6 +31,8 @@ public abstract class Robot {
     protected double vitesseLibre;
     protected int quantiteEau;
     protected int[][] matriceAdj;
+    protected int numIncendie;
+    protected Case eau;
 	
     /** 
      * Construit un objet de type Robot
@@ -48,6 +50,8 @@ public abstract class Robot {
 	this.extinction = extinction;
 	MatriceAdj mat = new MatriceAdj(this, carte);
 	this.matriceAdj = mat.getMatriceAdj();
+	this.numIncendie = -1;
+	this.eau = null;
     }
 
     /**
@@ -103,11 +107,57 @@ public abstract class Robot {
      * @return le plus court chemin
      */
     public Chemin getPCC(Case dest) {
-
 	Dijkstra dij = new Dijkstra(this.getMatriceAdj(), this.getPosition(), dest, this.carte);
-	return dij.getPCC();
-	
+	return dij.getPCC();	
     }
+
+    /**
+     * Accesseur (get) 
+     * @return le numero de l'incendie associe au robot
+     */
+     public int getNumIncendie() {
+	return this.numIncendie;
+	}
+
+    /**
+     * Accesseur (get) 
+     * @return la case contenant de l'eau associe au robot qui se dirige vers cette case pour remplir son reservoir
+     */
+     public Case getEau() {
+	return this.eau;
+	}
+
+    /**
+      * Determine la case adjacente a c atteignable la plus proche du robot
+      * Si c'est un drone retourne la case 'c'
+      * @return la case calcule
+      */
+    public Case getCaseACote(Case c) {
+ 		
+		if (this.getVitesse(NatureTerrain.EAU) != 0)
+			return c;
+		else {
+        		int dureeMin = Integer.MAX_VALUE;
+			NatureTerrain nature;
+        		Chemin pCC = new Chemin();
+        		int duree = dureeMin;
+			Case voisin;
+			Case dest = this.position;
+			for (Direction dir : Direction.values()) {
+				if (this.carte.voisinExiste(c, dir)) {
+			    		voisin = carte.getVoisin(c, dir);
+			   		nature = voisin.getNature();
+					if ((this.getVitesse(nature) != 0) && (this.getDureePCC(voisin) < duree)) {
+						pCC = this.getPCC(voisin);
+						duree = this.getDureePCC(voisin);
+						dest = this.carte.getVoisin(c, dir);
+					}
+				}
+			}
+		
+			return dest;
+		}
+   }
 
     /**
       * Determine le plus court
@@ -116,54 +166,16 @@ public abstract class Robot {
       * @param c la Case concernee
       * @return le PCC ou NULL si inaccessible
       */
-    public Chemin getPCCACote(Case c) {
-        if (this.getVitesse(NatureTerrain.EAU) != 0)
-            return this.getPCC(c);
-        int dureeMin = Integer.MAX_VALUE;
-        Chemin pCC = new Chemin();
-        pCC.addCase(c, Integer.MAX_VALUE);
-        Chemin chem = pCC;
-        int duree = dureeMin;;
-        int lig = c.getLigne();
-        int col = c.getColonne();
-        if (lig != 0) {
-            chem = this.getPCC(this.carte.getCase(lig-1,col));
-            duree = chem.getDuree();
-            if (duree < dureeMin) {
-                dureeMin = duree;
-                pCC = chem;
-            }
-        }
-        if (lig != (this.carte.getNbLignes() - 1))
-            chem = this.getPCC(this.carte.getCase(lig+1,col));
-            duree = chem.getDuree();
-            if (duree < dureeMin) {
-                dureeMin = duree;
-                pCC = chem;
-            }
-        if (col != 0)
-            chem = this.getPCC(this.carte.getCase(lig,col-1));
-            duree = chem.getDuree();
-            if (duree < dureeMin) {
-                dureeMin = duree;
-                pCC = chem;
-            }
-        if (col != (this.carte.getNbColonnes() - 1))
-            chem = this.getPCC(this.carte.getCase(lig,col+1));
-            duree = chem.getDuree();
-            if (duree < dureeMin) {
-                dureeMin = duree;
-                pCC = chem;
-            }
-        return pCC;
-    }
-
+	public Chemin getPCCACote(Case c) {
+		return this.getPCC(this.getCaseACote(c));
+	}
+			
+		
     /**
      * Accesseur (get) 
      * @return la duree du plus court chemin
      */
     public int getDureePCC(Case dest) {
-
     Chemin pcc = this.getPCC(dest);
     return pcc.getDuree();  
     }
@@ -242,6 +254,22 @@ public abstract class Robot {
     public void setPosition(Case pos) {
 	this.position = pos;
     }
+
+    /**
+     * Mutateur (set)
+     * Modifie le numero d'incendie associe au robot
+     */
+    public void setNumIncendie(int num) {
+	this.numIncendie = num;
+	}
+
+    /**
+     * Mutateur (set)
+     * Modifie la case eau associee au robot
+     */
+    public void setEau(Case dest) {
+	this.eau = dest;
+	}
 
     /**
      * Mutateur (set)

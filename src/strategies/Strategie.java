@@ -56,7 +56,7 @@ public abstract class Strategie {
 		for (int j=0; j<robots.length; j++) {
 			if(!etatsRobots[j]) {
 				Robot r = robots[j];
-				int duree = r.getDureePCCACote(dest);
+				int duree = r.getDureePCC(dest);
 				if(duree < dureeMin) {
 					bestRobot = j;
 					dureeMin = duree;
