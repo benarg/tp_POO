@@ -141,14 +141,23 @@ public class Dijkstra {
 	*/
 	Chemin chemin = new Chemin();
 	chemin.duree = distDestNode;
-	
-	for (int i = 0; i < pathToDest.size(); i++) {
-	    Case sommet = caseDuSommet(pathToDest.get(i), carte);
-	    // DEBUG : System.out.println(sommet);
-	    chemin.addCase(sommet, 0);
+
+	if (chemin.duree <  99999999) {
+	   	
+	    for (int i = 0; i < pathToDest.size(); i++) {
+		Case sommet = caseDuSommet(pathToDest.get(i), carte);
+		// DEBUG : System.out.println(sommet);
+		chemin.addCase(sommet, 0);
+	    }
+	    
+	} else {
+
+	    chemin.duree = Integer.MAX_VALUE;
+
 	}
 
 	this.chemin = chemin;
+
 	
     }
 
