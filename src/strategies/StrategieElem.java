@@ -12,15 +12,24 @@ public class StrategieElem extends Strategie{
 
     public void step() {
 
+
+	System.out.println("WE ARE IN THE STEP");
+	
 	/*
 	  On détermine les robots à réservoir vide afin de leur affecter la tache de
 	  remplir leurs réservoirs
 	*/
 	for (int i = 0; i < this.robots.length; i++) {
-		
+
+	    System.out.println("WE ARE IN FOR LOOP : " + i);
+	    
 	    Robot robot = this.robots[i];
+
+	    System.out.println(robot.getQuantiteEau());
 		
 	    if (robot.getQuantiteEau() == 0) {
+
+		System.out.println("WE ARE IN ROBOT NEEDS WATER : " + i);
 		
 		this.etatsRobots[i] = false;
 		Case eau = robot.getCaseACote(eauPPRobot(robot));
@@ -40,11 +49,11 @@ public class StrategieElem extends Strategie{
 	    
 	    int indiceIncendie = getIncendieLibre();
 	    Incendie incendie = this.incendies[indiceIncendie];
-	    this.etatsIncendies[indiceIncendie] = false;
+	    this.etatsIncendies[indiceIncendie] = true;
 	    
 	    int indiceRobot = getRobotCandidat(incendie);
 	    Robot robot = this.robots[indiceRobot];
-	    this.etatsRobots[indiceRobot] = false;
+	    this.etatsRobots[indiceRobot] = true;
 
 	    int dureePCC = robot.getDureePCC(incendie.getPosition());
 	    robot.creerEvtsPCC(this.simu, incendie.getPosition(), this.simu.getDateCour());
@@ -58,8 +67,9 @@ public class StrategieElem extends Strategie{
 
     // Cette méthode renvoit un incendie non affecté
     private int getIncendieLibre() {
+	
 	int indiceIncendie = 0;
-	while (this.etatsIncendies[indiceIncendie] == false) {
+	while (this.etatsIncendies[indiceIncendie]) {
 	    indiceIncendie++;
 	}
         return indiceIncendie;
@@ -72,7 +82,7 @@ public class StrategieElem extends Strategie{
     */
     private int getRobotCandidat(Incendie incendie) {
         for (int i = 0; i < this.robots.length; i++) {
-	    if (this.etatsRobots[i]) {
+	    if (!this.etatsRobots[i]) {
 		// if this.robots[i] peut aller à l'incendie (tester dijkstra
 		// pour examiner le cas du chemin irréalisable
 		// pour l'instant, on suppose cette condition satisfaite d
@@ -83,8 +93,9 @@ public class StrategieElem extends Strategie{
     }
 
     private boolean incendiesLibres(boolean etatsIncendies[]) {
+	
 	for (int i = 0; i < etatsIncendies.length; i++) {
-	    if (etatsIncendies[i]) {
+	    if (!etatsIncendies[i]) {
 		return true;
 	    }
 	}
@@ -93,7 +104,7 @@ public class StrategieElem extends Strategie{
 
     private boolean robotsLibres(boolean etatsRobots[]) {
 	for (int i = 0; i < etatsRobots.length; i++) {
-	    if (etatsRobots[i]) {
+	    if (!etatsRobots[i]) {
 		return true;
 	    }
 	}
