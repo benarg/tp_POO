@@ -36,13 +36,6 @@ public class Simulateur implements Simulable {
 
     
 
-    /**
-     * Crée un Invader et le dessine.
-     * @param gui l'interface graphique associée, dans laquelle se fera le
-     * dessin et qui enverra les messages via les méthodes héritées de
-     * Simulable.
-     * @param color la couleur de l'invader
-     */
     public Simulateur(DonneesSimulation d) {
         int width = d.getCarte().getNbColonnes()*d.getCarte().getTailleCases();
         int height = d.getCarte().getNbLignes()*d.getCarte().getTailleCases();
@@ -91,16 +84,27 @@ public class Simulateur implements Simulable {
         this.draw();
     }
 
+    /**
+      * Nous avons fait le choix de ne que remettre la date a 0
+      */
     @Override
     public void restart() {
         this.dateCour = 0;
     }
 
+    /** 
+      * Ajoute un element a la simulation
+      * @param e element a ajouter a la simulation
+      */
     public void ajouteEvenement(Evenement e) {
         dates.addEvenement(e);
         this.derniereDate = Math.max(this.derniereDate, e.getDate());
     }
 
+    /** 
+      * Accesseur (get)
+      * @return la date courante de la simulation
+      */
     public int getDateCour() {
         return this.dateCour;
     }

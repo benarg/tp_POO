@@ -6,12 +6,28 @@ import robots.*;
 import java.util.ArrayList;
 
 public abstract class Strategie {
+
 	protected Robot robots[];
+
+	/** Liste des etats des robots
+	  * true -> occupe
+	  * false -> libre
+	  */
 	protected boolean etatsRobots[];
+
 	protected Incendie incendies[];
+
+	/** Liste des etats des incendies
+	  * true -> occupe
+	  * false -> libre
+	  */
 	protected boolean etatsIncendies[];
+
+	/** Liste des cases contenants de l'eau sur la carte*/
 	protected Case casesEau[];
+
 	protected Carte carte;
+	
 	protected Simulateur simu;
 
 	public Strategie(DonneesSimulation d, Simulateur s) {
@@ -45,10 +61,16 @@ public abstract class Strategie {
 
 	public abstract void step();
 
+	/**
+	  * Marque un robot comme libre
+	  */
 	public void robotFini(int indiceRobot) {
 		etatsRobots[indiceRobot] = false;
 	}
 
+	/**
+	  * @return l'indice du robot libre le plus proche de l'incendie i
+	  */
 	public int robotPPIncendie(Incendie i) {
 		Case dest = i.getPosition();
 		int bestRobot = -1;
@@ -66,6 +88,9 @@ public abstract class Strategie {
 		return bestRobot;
 	}
 
+	/**
+	  * @return la case a cote de l'eau la plus proche du robot r
+	  */
 	public Case eauPPRobot(Robot r) {
 		Case bestCase = null;
 		int dureeMin = Integer.MAX_VALUE;

@@ -1,6 +1,6 @@
 /**
  * Sous-classe de la classe abstraite Robot
- * @author argensob
+ * @author 
  * 2016
  */
 

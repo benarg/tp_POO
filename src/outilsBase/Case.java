@@ -1,6 +1,6 @@
 /**
   * Case, definie par deux coordonnees entieres (ligne et colonne) et la nature du terrain qu'elle represente
-  * @author lefoulj
+  * @author
   * 2016
   */
 

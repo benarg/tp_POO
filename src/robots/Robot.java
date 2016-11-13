@@ -3,7 +3,7 @@
  * contient la carte et la case sur laquelle il est positionne, le volume et le temps pour remplir et vider (extinction) son reservoir, sa vitesse en fonction du type de terrain et le volume d'eau qu'il contient.
  * Cette classe fournit notamment des methodes pour acceder aux vitesses du robot en fonction du terrain, a sa position...
  * ou pour effectuer une intervention (deverser une quantite d'eau, remplir son reservoir) ou se deplacer sur une case donnee.
- * @author argensob
+ * @author
  * 2016
  */
 

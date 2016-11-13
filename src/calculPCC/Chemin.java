@@ -1,6 +1,6 @@
 /**
   * Chemin, definie, par une liste chainee, un chemin entre 2 cases
-  * @author lefoulj
+  * @author 
   * 2016
   */
 

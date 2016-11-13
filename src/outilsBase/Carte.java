@@ -4,7 +4,7 @@
   * Cette classe fournit notamment des methodes pour accéder 
   * a une case en fonction de ses coordonnees, 
   * ou pour trouver le voisin d’une case dans une direction donnee
-  * @author lefoulj
+  * @author
   * 2016
   */
 

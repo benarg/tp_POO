@@ -1,6 +1,6 @@
 /**
   * Sous-classe de la classe abstraite Robot
-  * @author lefoulj
+  * @author 
   * 2016
   */
 

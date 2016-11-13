@@ -1,6 +1,6 @@
 /**
   * NatureTerrain
-  * @author lefoulj
+  * @author 
   * 2016
   */
 

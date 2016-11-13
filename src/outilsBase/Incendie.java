@@ -2,7 +2,7 @@
  * Incendie:
  * Contient une case et une quantiteEau qui correspond à la
  * quantité d'eau nécessaire pour éteindre l'incendie
- * @author pougetat
+ * @author 
  */
 
 package outilsBase;
