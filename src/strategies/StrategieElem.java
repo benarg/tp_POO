@@ -15,6 +15,32 @@ public class StrategieElem extends Strategie{
 
     public void step() {
 
+
+	for (int i = 0; i < this.robots.length; i++) {
+
+	    Robot robot = this.robots[i];
+
+	    System.out.println(robot);
+	    if (robot.getNumIncendie() != -1) {
+		System.out.println("ROBOT FIRE TARGET IS : " +
+				   incendies[robot.getNumIncendie()].getPosition());
+	    } else {
+		System.out.println("ROBOT FIRE TARGET IS : -1");
+	    }
+	    if (robot.getEau() != null) {
+		System.out.println("ROBOT WATER TARGET IS : " +
+				   robot.getEau());
+	    } else {
+		System.out.println("ROBOT WATER TARET IS : NULL");
+	    }
+	    System.out.println("ROBOT STATUS IS " + this.etatsRobots[i]);
+	    System.out.println("ROBOT WATER LEVEL IS : " +
+			       robot.getQuantiteEau());
+	    System.out.println("----------------------------");
+
+	}
+	
+
 	for (int i = 0; i < this.robots.length; i++) {
 	    
 	    Robot robot = this.robots[i];
@@ -26,7 +52,7 @@ public class StrategieElem extends Strategie{
 		    Case dest = robot.getCaseACote(this.eauPPRobot(robot));
 		    int dureePCC = robot.getDureePCC(dest);
 		    robot.setEau(dest);
-		    robot.creerEvtsPCCACote(this.simu, dest, simu.getDateCour());
+		    robot.creerEvtsPCCACote(this.simu, this.eauPPRobot(robot), simu.getDateCour());
 		    
 		    if (robot.getNumIncendie() != -1) {
 			etatsIncendies[robot.getNumIncendie()] = false;
@@ -45,9 +71,15 @@ public class StrategieElem extends Strategie{
 		    if (etatsRobots[i]) {
 
 			// robot is currently filling up
+
+			System.out.println(robot + " IS WAITING TO FILL UP");
 			
 		    } else {
 
+			System.out.println(robot + " WILL FILL UP IN " +
+					   (int) robot.getTempsRemplissage());
+
+					   
 			simu.ajouteEvenement(new EvtRemplirReservoir(simu.getDateCour() + (int) robot.getTempsRemplissage() + 10, robot));
 			etatsRobots[i] = true;
 			simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + (int) robot.getTempsRemplissage() + 20, i, this));
@@ -85,12 +117,21 @@ public class StrategieElem extends Strategie{
 
 			Incendie incendie = incendies[incendieIndice];
 			int dureePCC = robot.getDureePCC(incendie.getPosition());
-			robot.creerEvtsPCC(this.simu, incendie.getPosition(),
-					   this.simu.getDateCour());
-			robot.setNumIncendie(incendieIndice);
-			this.etatsIncendies[incendieIndice] = true;
-			this.etatsRobots[i] = true;
-			simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + dureePCC + 10, i, this));
+			
+			if (dureePCC < Integer.MAX_VALUE) {
+			    
+			    robot.creerEvtsPCC(this.simu, incendie.getPosition(),
+					       this.simu.getDateCour());
+			    robot.setNumIncendie(incendieIndice);
+			    this.etatsIncendies[incendieIndice] = true;
+			    this.etatsRobots[i] = true;
+			    simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + dureePCC + 10, i, this));
+			} else {
+
+			    System.out.println(robot + " CANNOT GET TO "
+					       + incendies[incendieIndice].getPosition());
+
+			}
 
 		    }
 		}
@@ -101,6 +142,9 @@ public class StrategieElem extends Strategie{
 		    if (incendies[robot.getNumIncendie()].getIntensite() != 0) {
 
 			if (!etatsRobots[i]) {
+
+			    System.out.println(robot + " IS ABOUT TO LAUNCH WATER CMD "
+					       + (int) robot.getExtinction());
 			    
 			    this.etatsRobots[i] = true;
 			    simu.ajouteEvenement(new EvtInterventionRobot(simu.getDateCour() + (int) robot.getExtinction() + 10, robot, this.incendies[robot.getNumIncendie()]));
@@ -108,6 +152,8 @@ public class StrategieElem extends Strategie{
 
 			} else {
 
+			    System.out.println(robot + " IS WAITING TO WATER ");
+			    
 			    // robot is waiting to water
 
 			}
@@ -121,6 +167,7 @@ public class StrategieElem extends Strategie{
 		} else {
 
 		    // robot is on the way to the fire
+		    System.out.println(robot + " IS ON THE WAY");
 
 		}
 	    }
