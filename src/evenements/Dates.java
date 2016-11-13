@@ -1,3 +1,12 @@
+/**
+ * La classe Dates contient une Date cour ainsi qu'un objet Dates next
+ * Cette classe permet d'organiser les differents temps d'execution
+ * au sein de notre simulation.
+ * Pour plus de visibilite : Consulter notre rapport PDF
+ */
+
+
+
 package evenements;
 
 public class Dates {
@@ -10,16 +19,20 @@ public class Dates {
 	this.next = null;
     }
 
-
+    /**
+       Construit un objet Dates contenant une date d et
+       un objet Dates next initialises a NULL
+     */
     public Dates(Date d) {
 	this.cour = d;
 	this.next = null;
     }
 
     /**
-     * Cette méthode s'appelle sur la tete d'une liste chainee
+     * Cette methode s'appelle sur la tete d'une liste chainee
      * de Dates et renvoie l'objet Date correspondant à l'entier 
      * date voulu
+     *@return la Date associee a la date (int) d
      **/
     public Date getDate(int d) {
 
@@ -36,8 +49,8 @@ public class Dates {
     }
 
     /**
-     * Cette méthode s'appelle sur la tete d'une liste chainee
-     * de Dates et insere l'evenement à la Dates correspondante
+     * Cette methode s'appelle sur la tete d'une liste chainee
+     * de Dates et insere l'evenement evt à l'objet Dates correspondant
      **/
     public void addEvenement(Evenement evt) {
 	
