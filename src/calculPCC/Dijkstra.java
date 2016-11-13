@@ -7,7 +7,15 @@
   => what is the shortest path from my source node to my destination node ?
   => what is the time it takes to travel on this shortest path from my
      source node to my destination node
-*/ 
+*/
+
+/**
+ * La classe Dijkstra permet d'effectuer des calculs de plus court chemin
+ * a partir d'une matrice d'adjacence associee a un couple (robot, carte)
+ * 
+ * L'attribut de la classe est un chemin allant de la case source a la 
+ * case destination entree en parametres
+ */
 
 package calculPCC;
 
@@ -19,32 +27,63 @@ public class Dijkstra {
 
     private Chemin chemin;
 
+
+    /**
+     * cette methode permet de traduire le sommet au sein d'une carte (Case)
+     * en un sommet au sein de la matrice d'adjacence (int)
+     * @return numeroSommet (int) du sommet (Case) 
+     */
     private int numeroSommet(Case sommet, Carte c) {
 	return (sommet.getLigne()*c.getNbColonnes() + sommet.getColonne());
     }
-    
+
+    /**
+     * cette methode permet de traduire le sommet au sein d'une matrice 
+     * d'adjacence (int) en un sommet au sein de la matrice d'adjacence (Case)
+     * @return caseDuSommet (Case) du sommet (int) 
+     */
     private Case caseDuSommet(int sommet, Carte c) {
 	return c.getCase(sommet/c.getNbColonnes(), sommet%(c.getNbColonnes()));
     }
 
+    /**
+     * Construit l'objet Dijkstra a partir d'une Case start, d'une Case dest,
+     * d'une Carte carte et d'une matrice d'adjacence
+     */
     public Dijkstra(int adj[][], Case start, Case dest, Carte carte) {
 
+
+	/* 
+	   On traduit les Case start et dest en (int) startNode et
+	   (int) destNode afin d'effectuer les calculs a partir de 
+	   la matrice d'adjacence
+	*/
 	int startNode = numeroSommet(start, carte);
 	int destNode = numeroSommet(dest, carte);
 	
 	int n = adj.length;
 	
 	int[][] cost = new int[n][n];
+
+	// distance contient la distance du noeud start a tout les autres noeuds
 	int[] distance = new int[n];
+
+	// pred[] contient le predecesseur de chaque noeud
 	int[] pred = new int[n];
+
+	// visited[] indique si oui ou non un noeud a deja ete visite
 	int[] visited = new int[n];
+
+	// count donne le nombre de neouds deja visites
 	int count;
-	int minDistance;
-	int nextNode = 0;
 	
-	//pred[] stores the predecessor of each node
-	//count gives the number of nodes seen so far
-	//create the cost matrix
+	int minDistance;
+	
+	int nextNode = 0;
+
+	/*
+	  On initialise la matrice de couts : cost
+	 */
 	for (int i = 0; i < n; i++) {
 	    for (int j = 0; j < n; j++) {
 		if (adj[i][j] == 0) {
@@ -54,8 +93,10 @@ public class Dijkstra {
 		}
 	    }
 	}	
-	
-	//initialize pred[],distance[] and visited[]
+
+	/*
+	  On initialise la matrice pred[], distance[] et visited[]
+	 */
 	for (int i = 0; i < n; i++) {
 	    distance[i] = cost[startNode][i];
 	    pred[i] = startNode;
@@ -66,11 +107,13 @@ public class Dijkstra {
 	visited[startNode] = 1;
 	count = 1;
 
+
+	// Tant que certains noeuds n'ont pas encore ete visites ...
 	while (count < n-1) {
 
 	    minDistance =  99999999;
 	    
-	    //nextnode gives the node at minimum distance
+	    // nextNode donne le noeud a distance minimal de start
 	    for (int i = 0; i < n; i++) {
 		
 		if ((distance[i] < minDistance) && (visited[i] == 0)) {
@@ -79,7 +122,7 @@ public class Dijkstra {
 		}
 	    }
 	    
-	    //check if a better path exists through nextnode
+	    // on verifie si un meilleur parcours existe avec nextNode
 	    visited[nextNode] = 1;
 	    for (int i = 0; i < n; i++) {
 		if (visited[i] == 0) {
@@ -93,12 +136,8 @@ public class Dijkstra {
 	}
 
 	/*
-	  We now assign to distDestNode the distance between the source and 
-	  the destination
-	  We also assign to pathToDest an arrayList<Integer> of the shortest
-	  path.
-	  Keep in mind that we will have to translate this path into a 
-	  "Chemin"
+	  - distDestNode est la distance entre start et dest
+	  - pathToDest contiendra le plus court chemin de start a dest 
 	 */
 	int distDestNode = distance[destNode];
 	ArrayList<Integer> pathToDest = new ArrayList<Integer>();
@@ -113,8 +152,8 @@ public class Dijkstra {
 	} while (j != startNode);	
 
 	/* 
-	   We invert the arrayList containing the path to obtain
-	   a path from source => dest instead of dest => source
+	   On inverse pathToDest afin d'obtenir un path de start => dest
+	   plutot que dest => start
 	*/	
 	int middle = (int) Math.floor(pathToDest.size()/2);
 	int size = pathToDest.size();
@@ -124,20 +163,11 @@ public class Dijkstra {
 	    pathToDest.set(i, pathToDest.get(size - i - 1));
 	    pathToDest.set(size - i - 1, tmp);
 	}
-
-	/*
-	  FOR DEBUG PURPOSES
-
-	for (int i = 0; i < pathToDest.size(); i++) {
-	    System.out.print(pathToDest.get(i) + "->");
-	}
-	*/
 	
 	/*
-	  We now create a "Chemin" by translating a node 
-	  into a "Case" 
-	  We also assign to chemin.duree the distance from the source to
-	  the dest
+	  - On cree un Chemin chemin en transformant les (int) noeuds en 
+	  Case case
+	  - On affecte a chemin.duree la distance de la source a la dest
 	*/
 	Chemin chemin = new Chemin();
 	chemin.duree = distDestNode;
@@ -146,7 +176,6 @@ public class Dijkstra {
 	   	
 	    for (int i = 1; i < pathToDest.size(); i++) {
 		Case sommet = caseDuSommet(pathToDest.get(i), carte);
-		// DEBUG : System.out.println(sommet);
 		chemin.addCase(sommet, 0);
 	    }
 	    
@@ -161,6 +190,10 @@ public class Dijkstra {
 	
     }
 
+    /**
+     * Accesseur (get)
+     * @return le Chemin chemin creer par l'algorithme de dijkstra
+     */
     public Chemin getPCC() {
 
 	return this.chemin;
