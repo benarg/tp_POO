@@ -144,7 +144,7 @@ public class Dijkstra {
 
 	if (chemin.duree <  99999999) {
 	   	
-	    for (int i = 0; i < pathToDest.size(); i++) {
+	    for (int i = 1; i < pathToDest.size(); i++) {
 		Case sommet = caseDuSommet(pathToDest.get(i), carte);
 		// DEBUG : System.out.println(sommet);
 		chemin.addCase(sommet, 0);

@@ -6,109 +6,144 @@ import robots.*;
 import evenements.*;
 
 public class StrategieElem extends Strategie{
+
+    int currentDate = 0;
+    
     public StrategieElem(DonneesSimulation d, Simulateur s) {
 	super(d,s);
     }
 
     public void step() {
 
-
-	System.out.println("WE ARE IN THE STEP");
-	
-	/*
-	  On détermine les robots à réservoir vide afin de leur affecter la tache de
-	  remplir leurs réservoirs
-	*/
 	for (int i = 0; i < this.robots.length; i++) {
-
-	    System.out.println("WE ARE IN FOR LOOP : " + i);
 	    
 	    Robot robot = this.robots[i];
 
-	    System.out.println(robot.getQuantiteEau());
-		
 	    if (robot.getQuantiteEau() == 0) {
 
-		System.out.println("WE ARE IN ROBOT NEEDS WATER : " + i);
+		if (robot.getEau() == null) {
+
+		    Case dest = robot.getCaseACote(this.eauPPRobot(robot));
+		    int dureePCC = robot.getDureePCC(dest);
+		    robot.setEau(dest);
+		    robot.creerEvtsPCCACote(this.simu, dest, simu.getDateCour());
+		    
+		    if (robot.getNumIncendie() != -1) {
+			etatsIncendies[robot.getNumIncendie()] = false;
+			if (incendies[robot.getNumIncendie()].getIntensite() == 0) {
+			    etatsIncendies[robot.getNumIncendie()] = true;
+			}
+			robot.setNumIncendie(-1);
+		    }
+		    
+		    etatsRobots[i] = true;
+		    simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + dureePCC + 10, i, this));
+		}
+
+		else if (robot.getPosition() == robot.getEau()) {
+
+		    if (etatsRobots[i]) {
+
+			// robot is currently filling up
+			
+		    } else {
+
+			simu.ajouteEvenement(new EvtRemplirReservoir(simu.getDateCour() + (int) robot.getTempsRemplissage() + 10, robot));
+			etatsRobots[i] = true;
+			simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + (int) robot.getTempsRemplissage() + 20, i, this));
+
+		    }
+		}
 		
-		this.etatsRobots[i] = false;
-		Case eau = robot.getCaseACote(eauPPRobot(robot));
-		robot.creerEvtsPCCACote(this.simu, eau, this.simu.getDateCour());
-		int dureePCC = robot.getDureePCC(eau);
-		simu.ajouteEvenement(new EvtRemplirReservoir(dureePCC + 1, robot));
-		simu.ajouteEvenement(new EvtRobotLibre(dureePCC + (int) robot.getTempsRemplissage() + 1, i, this));
+		else {
+		    
+		    // robot is heading to a water area
+		    
+		}
+		
+	    }
+
+	    else if (robot.getNumIncendie() == -1) {
+
+		robot.setEau(null);
+		int incendieIndice = this.getIncendieLibre();
+
+		if (incendieIndice == -1) {
+
+		    // No fires are available
+
+		}
+
+		else {
+
+		    if (etatsRobots[i]) {
+
+			// robot is heading to the fire
+			// this subcase should theoretically not exist
+
+		    } else {
+
+			Incendie incendie = incendies[incendieIndice];
+			int dureePCC = robot.getDureePCC(incendie.getPosition());
+			robot.creerEvtsPCC(this.simu, incendie.getPosition(),
+					   this.simu.getDateCour());
+			robot.setNumIncendie(incendieIndice);
+			this.etatsIncendies[incendieIndice] = true;
+			this.etatsRobots[i] = true;
+			simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + dureePCC + 10, i, this));
+
+		    }
+		}
+		
+	    } else if (robot.getNumIncendie() != -1) {
+
+		if (robot.getPosition() == incendies[robot.getNumIncendie()].getPosition()) {
+		    if (incendies[robot.getNumIncendie()].getIntensite() != 0) {
+
+			if (!etatsRobots[i]) {
+			    
+			    this.etatsRobots[i] = true;
+			    simu.ajouteEvenement(new EvtInterventionRobot(simu.getDateCour() + (int) robot.getExtinction() + 10, robot, this.incendies[robot.getNumIncendie()]));
+			    simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + (int) robot.getExtinction() + 10, i, this));
+
+			} else {
+
+			    // robot is waiting to water
+
+			}
+
+		    } else {
+
+			this.etatsIncendies[robot.getNumIncendie()] = true;
+			robot.setNumIncendie(-1);
+
+		    }
+		} else {
+
+		    // robot is on the way to the fire
+
+		}
 	    }
 	}
-
-	/*
-	  On affecte des incendies non affectés à des robots libres et on crée les evts
-	  permettant d'éteindre ces incendies
-	*/
-	while (incendiesLibres(this.etatsIncendies)
-	       && (robotsLibres(this.etatsRobots))) {
-	    
-	    int indiceIncendie = getIncendieLibre();
-	    Incendie incendie = this.incendies[indiceIncendie];
-	    this.etatsIncendies[indiceIncendie] = true;
-	    
-	    int indiceRobot = getRobotCandidat(incendie);
-	    Robot robot = this.robots[indiceRobot];
-	    this.etatsRobots[indiceRobot] = true;
-
-	    int dureePCC = robot.getDureePCC(incendie.getPosition());
-	    robot.creerEvtsPCC(this.simu, incendie.getPosition(), this.simu.getDateCour());
-	    
-	    simu.ajouteEvenement(new EvtInterventionRobot(dureePCC + 1, robot, incendie));
-	    simu.ajouteEvenement(new EvtRobotLibre(dureePCC + (int) robot.getExtinction() + 1, indiceRobot, this));
-
-	}
-
     }
-
-    // Cette méthode renvoit un incendie non affecté
-    private int getIncendieLibre() {
-	
-	int indiceIncendie = 0;
-	while (this.etatsIncendies[indiceIncendie]) {
-	    indiceIncendie++;
-	}
-        return indiceIncendie;
-    }
-
-    /*
-      Cette méthode renvoit un robot candidat pour étendre l'incendie
-      1 => Ce robot n'est pas déjà sous ordre
-      2 => Ce robot peut physiquement se déplacer jusqu'à l'incendie
-    */
-    private int getRobotCandidat(Incendie incendie) {
-        for (int i = 0; i < this.robots.length; i++) {
+    
+    private boolean robotLibres() {
+	for (int i = 0; i < this.robots.length; i++) {
 	    if (!this.etatsRobots[i]) {
-		// if this.robots[i] peut aller à l'incendie (tester dijkstra
-		// pour examiner le cas du chemin irréalisable
-		// pour l'instant, on suppose cette condition satisfaite d
-		return i;
-	    }   
-	}
-	return -1;
-    }
-
-    private boolean incendiesLibres(boolean etatsIncendies[]) {
-	
-	for (int i = 0; i < etatsIncendies.length; i++) {
-	    if (!etatsIncendies[i]) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private boolean robotsLibres(boolean etatsRobots[]) {
-	for (int i = 0; i < etatsRobots.length; i++) {
-	    if (!etatsRobots[i]) {
 		return true;
 	    }
 	}
 	return false;
     }
     
+    private int getIncendieLibre() {
+	for (int i = 0; i < this.incendies.length; i++) {
+	    if (!this.etatsIncendies[i]) {
+		return i;
+	    }
+	}
+	return -1;
+    }
 }
+
+	
