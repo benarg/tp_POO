@@ -1,7 +1,7 @@
 /**
   * DonneesSimulation est la classe principale regroupant toutes 
   * les données du problème : une carte, les incendies et les robots.
-  * @author lefoulj
+  * @author 
   * 2016
   */
 

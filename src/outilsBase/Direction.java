@@ -1,6 +1,6 @@
 /**
   * Direction
-  * @author lefoulj
+  * @author 
   * 2016
   */
 
