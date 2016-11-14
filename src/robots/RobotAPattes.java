@@ -15,7 +15,7 @@ public class RobotAPattes extends Robot {
      * sur la Case position de la Carte carte
      */
     public RobotAPattes(Carte carte, Case position) {
-	super(carte, position, Integer.MAX_VALUE, 30, 0, 10, 30, 0., Integer.MAX_VALUE, 100./8.);
+	super(carte, position, Integer.MAX_VALUE, 30, 0, 10, 30, 0., Integer.MAX_VALUE, 10./1.);
     }
 
     public RobotAPattes(Carte carte, Case position, int vitesse) {

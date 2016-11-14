@@ -31,7 +31,11 @@ public abstract class Robot {
     protected double vitesseLibre;
     protected int quantiteEau;
     protected int[][] matriceAdj;
+
+    /** numero de l'incendie de la carte associee au robot sur lequel il est en train d'intervenir (vaut -1 par default)*/
     protected int numIncendie;
+
+    /** Case vers laquelle le robot ce dirige pour remplir son reservoir (vaut null par default) */
     protected Case eau;
 	
     /** 

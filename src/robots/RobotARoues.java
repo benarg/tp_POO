@@ -15,7 +15,7 @@ public class RobotARoues extends Robot {
      * sur la Case position de la Carte carte
      */
     public RobotARoues(Carte carte, Case position) {
-      super(carte, position, 5000, 0, 0, 0, 80, 10., 5000, 100./5.);
+      super(carte, position, 5000, 0, 0, 0, 80, 10*60, 5000, 100./5.);
     }
 
     /**

@@ -15,7 +15,7 @@ public class RobotAChenilles extends Robot {
 	  * sur la Case position de la Carte carte
 	  */
 	public RobotAChenilles(Carte carte, Case position) {
-		super(carte, position, 2000, 60/2, 0, 0, 60, 10., 2000, 100./8.);
+		super(carte, position, 2000, 60/2, 0, 0, 60, 5*60, 2000, 100./8.);
 	}
 
 	/**
