@@ -18,10 +18,15 @@ public class RobotAPattes extends Robot {
 	super(carte, position, Integer.MAX_VALUE, 30, 0, 10, 30, 0., Integer.MAX_VALUE, 100./8.);
     }
 
+
+    /**
+     * Construit un RobotAPattes avec une vitesse imposee
+     * sur la Case position de la Carte carte
+     */
     public RobotAPattes(Carte carte, Case position, int vitesse) {
         this(carte, position);
     }
-
+	
     @Override
     public void setPosition(Case pos) {
 	if (pos.getNature() == NatureTerrain.EAU)

@@ -8,23 +8,25 @@
 package outilsBase;
 
 public class Incendie {
-    
+
+    /** Position (Case) de l'incendie */
     Case position;
 
-    /**
-      * Accesseur (get)
-      * @return la position de l'incendie
-      */
-    public Case getPosition() {
-        return this.position;
-    }
-
+    /** Quantite d'eau necessaire pour eteindre l'incendie */
     int quantiteEau;
 
     /**
-      * Accesseur (get)
-      * @return la quantite d'eau necessaire pour eteindre l'incendie
-      */
+     * Accesseur (get)
+     * @return la position de l'incendie
+     */
+    public Case getPosition() {
+        return this.position;
+    }
+    
+    /**
+     * Accesseur (get)
+     * @return la quantite d'eau necessaire pour eteindre l'incendie
+     */
     public int getIntensite() {
         return this.quantiteEau;
     }
@@ -39,7 +41,7 @@ public class Incendie {
 
     /**
       * Construit un Incendie sur la case position 
-      * d'intensite quantiteEau
+      * et lui affecte d'intensite quantiteEau
       */
     public Incendie(Case pos, int intensite) {
 		this.position = pos;
