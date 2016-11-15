@@ -62,4 +62,4 @@ strategieEvolue: testStrategieEvolue
 	java -classpath bin:bin/gui.jar TestStrategieEvolue cartes/$(CARTE).map
 
 clean:
-	rm -rf bin/*.class bin/outilsBase/*.class bin/robots/*.class
+	rm -rf bin/*.class bin/outilsBase/*.class bin/robots/*.class bin/calculPCC/*.class bin/evenements/*.class bin/io/*.class bin/simulationTests/*.class bin/strategies/*.class
