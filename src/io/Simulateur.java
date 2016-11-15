@@ -37,8 +37,8 @@ public class Simulateur implements Simulable {
     
 
     public Simulateur(DonneesSimulation d) {
-        int width = d.getCarte().getNbColonnes()*d.getCarte().getTailleCases();
-        int height = d.getCarte().getNbLignes()*d.getCarte().getTailleCases();
+        int width = d.getCarte().getNbColonnes()*40;
+        int height = d.getCarte().getNbLignes()*40;
         this.gui = new GUISimulator(width, height, Color.BLACK);
         this.gui.setSimulable(this);				// association a la gui!
         this.donneesSimu = d;
@@ -124,7 +124,7 @@ public class Simulateur implements Simulable {
     private void draw() {
         gui.reset();	// clear the window
 
-        int taille = this.donneesSimu.getCarte().getTailleCases();
+        int taille = 40;
 
         /* On parcours les cases pour les afficher*/
         for (int i = 0; i < this.donneesSimu.getCarte().getNbColonnes(); i++) {
