@@ -166,7 +166,6 @@ public abstract class Robot {
     /**
       * Determine le plus court
       * pour aller sur une case si c'est un drone ou a cote sinon
-      * @param r le Robot concerne
       * @param c la Case concernee
       * @return le PCC ou NULL si inaccessible
       */

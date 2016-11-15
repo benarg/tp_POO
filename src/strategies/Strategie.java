@@ -11,16 +11,16 @@ public abstract class Strategie {
 	protected Robot robots[];
 
 	/** Liste des etats des robots
-	  * true -> occupe
-	  * false -> libre
+	  * true : occupe
+	  * false : libre
 	  */
 	protected boolean etatsRobots[];
 
 	protected Incendie incendies[];
 
 	/** Liste des etats des incendies
-	  * true -> occupe
-	  * false -> libre
+	  * true : occupe
+	  * false : libre
 	  */
 	protected boolean etatsIncendies[];
 

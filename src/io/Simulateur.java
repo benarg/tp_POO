@@ -66,7 +66,7 @@ public class Simulateur implements Simulable {
 
     @Override
     public void next() {
-        
+
         this.strat.step();
 
         System.out.println("DerniereDate: " + this.derniereDate);
@@ -114,7 +114,7 @@ public class Simulateur implements Simulable {
     }
 
     private boolean simulationTerminee() {
-        return this.dateCour == this.derniereDate;
+        return this.dateCour == this.derniereDate + 10;
     }
 
 
