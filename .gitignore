@@ -3,3 +3,6 @@ bin/io
 bin/outilsBase
 bin/evenements
 bin/robots
+bin/evenements
+bin/strategies
+bin/simulationTests

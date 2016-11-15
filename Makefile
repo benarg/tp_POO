@@ -21,7 +21,7 @@
 #   -classpath : repertoire dans lequel sont cherches les .class deja compiles
 #   -sourcepath : repertoire dans lequel sont cherches les .java (dependances)
 
-all: testInvader testLecture robots outilsBases
+all: testInvader testLecture
 
 testInvader:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestInvader.java
@@ -32,17 +32,20 @@ testLecture:
 testSimulateur:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestSimulateur.java
 
-robots:
-	javac -d bin -sourcepath src src/robots/Robot.java src/robots/RobotAChenilles.java src/robots/RobotAPattes.java src/robots/RobotARoues.java
+testStrategieElem:
+	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestStrategieElem.java
 
-outilsBase:
-	javac -d bin -sourcepath src src/outilsBase/Case.java src/outilsBase/NatureTerrain.java src/outilsBase/Direction.java src/outilsBase/Carte.java src/outilsBase/Incendie.java
+testStrategieEvolue:
+	javac -d bin -classpath bin/gui.jar -sourcepath src src/TestStrategieEvolue.java
 
 # Execution:
 # on peut taper directement la ligne de commande :
-#   > java -classpath bin:bin/gui.jar TestInvader
+#   > java -classpath bin:bin/gui.jar TestStrategieElem cartes/carteSujet.map
 # ou bien lancer l'execution en passant par ce Makefile:
-#   > make exeInvader
+#   > make strategieElem CARTE=carteSujet
+
+CARTE = carteSujet
+
 exeInvader: 
 	java -classpath bin:bin/gui.jar TestInvader
 
@@ -52,6 +55,11 @@ exeLecture:
 exeSimulateur: testSimulateur
 	java -classpath bin:bin/gui.jar TestSimulateur cartes/carteSujet.map
 
+strategieElem: testStrategieElem
+	java -classpath bin:bin/gui.jar TestStrategieElem cartes/$(CARTE).map
+
+strategieEvolue: testStrategieEvolue
+	java -classpath bin:bin/gui.jar TestStrategieEvolue cartes/$(CARTE).map
 
 clean:
-	rm -rf bin/*.class bin/outilsBase/*.class bin/robots/*.class
+	rm -rf bin/*.class bin/outilsBase/*.class bin/robots/*.class bin/calculPCC/*.class bin/evenements/*.class bin/io/*.class bin/simulationTests/*.class bin/strategies/*.class
