@@ -25,7 +25,15 @@ import outilsBase.*;
 
 public class Dijkstra {
 
-    private Chemin chemin;
+    private int startNode;
+
+    // distance contient la distance du noeud start a tout les autres noeuds
+    private int[] distance;
+
+    // pred[] contient le predecesseur de chaque noeud
+    private int[] pred;
+
+    private Carte carte;
 
 
     /**
@@ -50,26 +58,27 @@ public class Dijkstra {
      * Construit l'objet Dijkstra a partir d'une Case start, d'une Case dest,
      * d'une Carte carte et d'une matrice d'adjacence
      */
-    public Dijkstra(int adj[][], Case start, Case dest, Carte carte) {
+    public Dijkstra(int adj[][], Case start, Carte c) {
 
+    carte = c;
 
 	/* 
 	   On traduit les Case start et dest en (int) startNode et
 	   (int) destNode afin d'effectuer les calculs a partir de 
 	   la matrice d'adjacence
 	*/
-	int startNode = numeroSommet(start, carte);
-	int destNode = numeroSommet(dest, carte);
+	startNode = numeroSommet(start, carte);
+	
 	
 	int n = adj.length;
 	
 	int[][] cost = new int[n][n];
 
 	// distance contient la distance du noeud start a tout les autres noeuds
-	int[] distance = new int[n];
+	distance = new int[n];
 
 	// pred[] contient le predecesseur de chaque noeud
-	int[] pred = new int[n];
+	pred = new int[n];
 
 	// visited[] indique si oui ou non un noeud a deja ete visite
 	int[] visited = new int[n];
@@ -135,58 +144,6 @@ public class Dijkstra {
 	    count++;
 	}
 
-	/*
-	  - distDestNode est la distance entre start et dest
-	  - pathToDest contiendra le plus court chemin de start a dest 
-	 */
-	int distDestNode = distance[destNode];
-	ArrayList<Integer> pathToDest = new ArrayList<Integer>();
-	
-	int j = destNode;
-	
-	pathToDest.add(j);
-	
-	do {
-	    j = pred[j];
-	    pathToDest.add(j);
-	} while (j != startNode);	
-
-	/* 
-	   On inverse pathToDest afin d'obtenir un path de start => dest
-	   plutot que dest => start
-	*/	
-	int middle = (int) Math.floor(pathToDest.size()/2);
-	int size = pathToDest.size();
-	
-	for (int i = 0; i < middle; i++) {
-	    int tmp = pathToDest.get(i);
-	    pathToDest.set(i, pathToDest.get(size - i - 1));
-	    pathToDest.set(size - i - 1, tmp);
-	}
-	
-	/*
-	  - On cree un Chemin chemin en transformant les (int) noeuds en 
-	  Case case
-	  - On affecte a chemin.duree la distance de la source a la dest
-	*/
-	Chemin chemin = new Chemin();
-	chemin.duree = distDestNode;
-
-	if (chemin.duree <  99999999) {
-	   	
-	    for (int i = 1; i < pathToDest.size(); i++) {
-		Case sommet = caseDuSommet(pathToDest.get(i), carte);
-		chemin.addCase(sommet, 0);
-	    }
-	    
-	} else {
-
-	    chemin.duree = Integer.MAX_VALUE;
-
-	}
-
-	this.chemin = chemin;
-
 	
     }
 
@@ -194,9 +151,61 @@ public class Dijkstra {
      * Accesseur (get)
      * @return le Chemin chemin creer par l'algorithme de dijkstra
      */
-    public Chemin getPCC() {
+    public Chemin getPCC(Case dest) {
 
-	return this.chemin;
+        int destNode = numeroSommet(dest, carte);
+
+        /*
+          - distDestNode est la distance entre start et dest
+          - pathToDest contiendra le plus court chemin de start a dest 
+         */
+        int distDestNode = distance[destNode];
+        ArrayList<Integer> pathToDest = new ArrayList<Integer>();
+        
+        int j = destNode;
+        
+        pathToDest.add(j);
+        
+        do {
+            j = pred[j];
+            pathToDest.add(j);
+        } while (j != startNode);   
+
+        /* 
+           On inverse pathToDest afin d'obtenir un path de start => dest
+           plutot que dest => start
+        */  
+        int middle = (int) Math.floor(pathToDest.size()/2);
+        int size = pathToDest.size();
+        
+        for (int i = 0; i < middle; i++) {
+            int tmp = pathToDest.get(i);
+            pathToDest.set(i, pathToDest.get(size - i - 1));
+            pathToDest.set(size - i - 1, tmp);
+        }
+        
+        /*
+          - On cree un Chemin chemin en transformant les (int) noeuds en 
+          Case case
+          - On affecte a chemin.duree la distance de la source a la dest
+        */
+        Chemin chemin = new Chemin();
+        chemin.duree = distDestNode;
+
+        if (chemin.duree <  99999999) {
+            
+            for (int i = 1; i < pathToDest.size(); i++) {
+            Case sommet = caseDuSommet(pathToDest.get(i), carte);
+            chemin.addCase(sommet, 0);
+            }
+            
+        } else {
+
+            chemin.duree = Integer.MAX_VALUE;
+
+        }
+
+    	return chemin;
 
     }
 

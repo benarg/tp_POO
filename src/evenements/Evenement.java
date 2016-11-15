@@ -9,7 +9,7 @@
 package evenements;
 
 public abstract class Evenement {
-	private int date;
+	protected int date;
 
 	/**
       * Accesseur (get)

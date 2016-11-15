@@ -12,10 +12,10 @@ public class EvtInterventionRobot extends Evenement {
 	private Robot robot;
 	private Incendie incendie;
 
-	public EvtInterventionRobot(int t, Robot rob, Incendie incendie) {
+	public EvtInterventionRobot(int t, Robot rob, Incendie inc) {
 		super(t);
 		this.robot = rob;
-		this.incendie = incendie;
+		this.incendie = inc;
 	}
 
 	/**

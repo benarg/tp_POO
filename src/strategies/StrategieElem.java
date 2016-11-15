@@ -147,7 +147,7 @@ public class StrategieElem extends Strategie{
 					       + (int) robot.getExtinction());
 			    
 			    this.etatsRobots[i] = true;
-			    simu.ajouteEvenement(new EvtInterventionRobot(simu.getDateCour() + (int) robot.getExtinction() + 10, robot, this.incendies[robot.getNumIncendie()]));
+			    simu.ajouteEvenement(new EvtInterventionRobot(simu.getDateCour() + (int) (robot.getQuantiteEau() / robot.getExtinction()) + 10, robot, this.incendies[robot.getNumIncendie()]));
 			    simu.ajouteEvenement(new EvtRobotLibre(simu.getDateCour() + (int) robot.getExtinction() + 10, i, this));
 
 			} else {
