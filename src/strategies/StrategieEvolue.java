@@ -13,18 +13,19 @@ public class StrategieEvolue extends Strategie{
 
 	public void step() {
 	
-		// le chef robot propose à tous les robots un incendie a eteindre
-		for (int i=0; i<incendies.length; i++) {
-			if (!etatsIncendies[i]) {
-				Incendie feu = incendies[i];
+		// le chef robot propose à tous les robots libres un incendie a eteindre
+		for (int i=0; i<etatsRobots.length; i++) {
+			if (!etatsRobots[i]) {
+				Robot rob = robots[i];
 
-				// il selectionne pour chaques incendies le robot libre le plus proche
+				// il selectionne pour chaques robots libres l'incendie le plus proche
 
-				int iRobot = this.robotPPIncendie(feu);
-				if (iRobot > -1) {
-					robots[iRobot].creerEvtsPCC(this.simu, feu.getPosition(), this.simu.getDateCour());
-					this.etatsRobots[iRobot] = true;
-					robots[iRobot].setNumIncendie(i);
+				int iIncendie = this.incendiePPRobot(rob);
+				if (iIncendie > -1) {
+					Incendie feu = incendies[iIncendie];
+					rob.creerEvtsPCC(this.simu, feu.getPosition(), this.simu.getDateCour());
+					this.etatsRobots[i] = true;
+					robots[i].setNumIncendie(iIncendie);
 				}
 			}
 		}
@@ -72,14 +73,13 @@ public class StrategieEvolue extends Strategie{
 
 					if (incendie.getPosition() == r.getPosition()) {
 
-						// il regarde si personne n'a eteint cet incendie entre temps ou si aucun robot n'est en train d'intervenir dessus
+						// il regarde si personne n'a eteint cet incendie entre temps
 
-						if (incendie.getIntensite() > 0 && etatsIncendies[r.getNumIncendie()] == false) {
+						if (incendie.getIntensite() > 0 ) {
 
 							// si c'est le cas alors il intervient sur l'incendie					
-	
-							etatsIncendies[r.getNumIncendie()] = true;						
-							simu.ajouteEvenement(new EvtInterventionRobot(simu.getDateCour() + 1 + (int) Math.ceil(Math.min(r.getQuantiteEau(), incendie.getIntensite())/ (r.getExtinction())), r, incendie));
+						
+							simu.ajouteEvenement(new EvtVerserEau(simu.getDateCour() + 1, r, incendie));
 						}
 						
 						// si son intervention a permis d' eteindre l'incendie alors le robot devient 'libre'

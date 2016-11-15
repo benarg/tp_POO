@@ -88,6 +88,28 @@ public abstract class Strategie {
 		return bestRobot;
 	}
 
+
+	/**
+	  * @return l'indice de l'incendie le plus proche du robot i
+	  */
+	public int incendiePPRobot(Robot r) {
+		int bestIncendie = -1;
+		int dureeMin = Integer.MAX_VALUE;
+		int duree = Integer.MAX_VALUE;                                                           
+		for (int j=0; j<incendies.length; j++) {
+			if(!etatsIncendies[j]) {
+				Incendie feu = incendies[j];
+				Case dest = feu.getPosition();
+				duree = r.getDureePCC(dest);
+				if(duree < dureeMin) {
+					bestIncendie = j;
+					dureeMin = duree;
+				}
+			}
+		}
+		return bestIncendie;
+	}
+
 	/**
 	  * @return la case a cote de l'eau la plus proche du robot r
 	  */
