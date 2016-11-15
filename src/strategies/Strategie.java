@@ -4,6 +4,7 @@ import io.*;
 import outilsBase.*;
 import robots.*;
 import java.util.ArrayList;
+import calculPCC.*;
 
 public abstract class Strategie {
 
@@ -116,8 +117,26 @@ public abstract class Strategie {
 	public Case eauPPRobot(Robot r) {
 		Case bestCase = null;
 		int dureeMin = Integer.MAX_VALUE;
+		Dijkstra dij = new Dijkstra(r.getMatriceAdj(), r.getPosition(), this.carte);
 		for (Case c:casesEau) {
-			int duree = r.getDureePCCACote(c);
+			int duree = dureeMin;
+			if (r.getVitesse(NatureTerrain.EAU) != 0)
+				duree = (dij.getPCC(c)).getDuree();
+			else {
+	        	int dureeM = Integer.MAX_VALUE;
+				NatureTerrain nature;
+	        	Chemin pCC = new Chemin();
+				Case voisin;
+				for (Direction dir : Direction.values()) {
+					if (this.carte.voisinExiste(c, dir)) {
+				    	voisin = carte.getVoisin(c, dir);
+				   		nature = voisin.getNature();
+						if ((r.getVitesse(nature) != 0) && ((dij.getPCC(voisin)).getDuree() < duree)) {
+							duree = (dij.getPCC(voisin)).getDuree();
+						}
+					}
+				}
+			}
 			if(duree < dureeMin) {
 				bestCase = c;
 				dureeMin = duree;

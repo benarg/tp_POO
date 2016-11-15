@@ -111,8 +111,8 @@ public abstract class Robot {
      * @return le plus court chemin
      */
     public Chemin getPCC(Case dest) {
-	Dijkstra dij = new Dijkstra(this.getMatriceAdj(), this.getPosition(), dest, this.carte);
-	return dij.getPCC();	
+	Dijkstra dij = new Dijkstra(this.getMatriceAdj(), this.getPosition(), this.carte);
+	return dij.getPCC(dest);	
     }
 
     /**
@@ -141,10 +141,10 @@ public abstract class Robot {
 		if (this.getVitesse(NatureTerrain.EAU) != 0)
 			return c;
 		else {
-        		int dureeMin = Integer.MAX_VALUE;
+        	int dureeMin = Integer.MAX_VALUE;
 			NatureTerrain nature;
-        		Chemin pCC = new Chemin();
-        		int duree = dureeMin;
+        	Chemin pCC = new Chemin();
+        	int duree = dureeMin;
 			Case voisin;
 			Case dest = this.position;
 			for (Direction dir : Direction.values()) {

@@ -61,12 +61,14 @@ public class Simulateur implements Simulable {
             default:
                 break;
         }
-        this.strat.step();
         draw();
     }
 
     @Override
     public void next() {
+        
+        this.strat.step();
+
         System.out.println("DerniereDate: " + this.derniereDate);
         System.out.println("DateCour: " + this.dateCour + "\n");
 
@@ -78,8 +80,6 @@ public class Simulateur implements Simulable {
         Date d = dates.getDate(this.dateCour);
         if (d != null)
             d.execute();
-
-        this.strat.step();
 
         this.draw();
     }

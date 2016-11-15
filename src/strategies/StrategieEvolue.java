@@ -53,6 +53,10 @@ public class StrategieEvolue extends Strategie{
 					this.etatsRobots[i] = true;
 					robots[i].setNumIncendie(iIncendie);
 				}
+				else {
+					//Le robot ne sert plus a rien
+					etatsRobots[i]=true;
+				}
 			}
 		}
 		for (int j=0 ; j<etatsRobots.length; j++) {
