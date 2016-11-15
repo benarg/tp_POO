@@ -12,6 +12,32 @@ public class StrategieEvolue extends Strategie{
 	}
 
 	public void step() {
+
+
+	    for (int i = 0; i < this.robots.length; i++) {
+
+		Robot robot = this.robots[i];
+
+		System.out.println(robot);
+		if (robot.getNumIncendie() != -1) {
+		    System.out.println("ROBOT FIRE TARGET IS : " +
+				       incendies[robot.getNumIncendie()].getPosition());
+		} else {
+		    System.out.println("ROBOT FIRE TARGET IS : -1");
+		}
+		if (robot.getEau() != null) {
+		    System.out.println("ROBOT WATER TARGET IS : " +
+				       robot.getEau());
+		} else {
+		    System.out.println("ROBOT WATER TARET IS : NULL");
+		}
+		System.out.println("ROBOT STATUS IS " + this.etatsRobots[i]);
+		System.out.println("ROBOT WATER LEVEL IS : " +
+				   robot.getQuantiteEau());
+		System.out.println("----------------------------");
+
+	    }
+	
 	
 		// le chef robot propose à tous les robots libres un incendie a eteindre
 		for (int i=0; i<etatsRobots.length; i++) {
